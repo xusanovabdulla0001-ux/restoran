@@ -3,86 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oshxona Ekrani</title>
+<title>Ofitsiant Ekrani</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{--bg:#0a0a0a;--surface:#141414;--card:#1c1c1c;--border:#2a2a2a;--text:#f0f0f0;--muted:#888;--accent:#f5c842;--green:#4caf72;--red:#e05252;--blue:#5b9cf6;--orange:#f0883e}
 body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
-header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.logo{font-size:17px;font-weight:700;color:var(--accent)}
-.counter-badge{background:var(--red);color:#fff;padding:4px 14px;border-radius:20px;font-size:14px;font-weight:700}
-.ping{animation:ping .6s ease-in-out infinite alternate}
-@keyframes ping{from{transform:scale(1)}to{transform:scale(1.08)}}
-.main{padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;align-items:start}
-.order-card{border-radius:14px;border:2px solid var(--border);overflow:hidden;transition:all .2s}
-.order-card.yangi{border-color:var(--red);animation:flash 1s ease-in-out 3}
-@keyframes flash{0%,100%{box-shadow:none}50%{box-shadow:0 0 20px rgba(224,82,82,.4)}}
-.order-card.tayyorlanmoqda{border-color:var(--orange)}
-.order-card.tayyor{border-color:var(--green);opacity:.6}
-.card-header{padding:14px 16px;display:flex;align-items:center;justify-content:space-between}
-.card-header.yangi{background:#2e0e0e}
-.card-header.tayyorlanmoqda{background:#2e1c00}
-.card-header.tayyor{background:#0b2e18}
-.order-id{font-size:18px;font-weight:800}
-.order-meta{font-size:12px;color:var(--muted);margin-top:2px}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-size:16px;font-weight:700;color:var(--accent)}
+.tabs{display:flex;gap:4px;padding:12px 16px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:60px;z-index:90}
+.tab{padding:8px 18px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:13px;cursor:pointer;font-family:inherit;transition:all .15s}
+.tab.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700}
+.count-dot{background:var(--red);color:#fff;border-radius:50%;padding:1px 6px;font-size:11px;margin-left:4px;font-weight:700}
+.main{padding:16px;max-width:700px;margin:0 auto}
+.section{display:none}.section.active{display:block}
+.order-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px}
+.order-card.tayyor{border-color:var(--green);border-left:4px solid var(--green)}
+.order-card.yangi,.order-card.tayyorlanmoqda{border-left:4px solid var(--orange);opacity:.75}
+.order-card.yetkazildi{opacity:.4;border-left:4px solid var(--border)}
+.top-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.order-id{font-size:17px;font-weight:800}
 .badge{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}
-.badge.red{background:rgba(224,82,82,.15);color:var(--red);border:1px solid rgba(224,82,82,.3)}
-.badge.orange{background:rgba(240,136,62,.15);color:var(--orange);border:1px solid rgba(240,136,62,.3)}
 .badge.green{background:rgba(76,175,114,.15);color:var(--green);border:1px solid rgba(76,175,114,.3)}
-.items-list{padding:12px 16px;background:var(--card)}
-.item-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)}
-.item-row:last-child{border-bottom:none}
-.item-nom{font-size:15px;font-weight:600}
-.item-qty{font-size:20px;font-weight:800;color:var(--accent);min-width:36px;text-align:right}
-.card-footer{padding:12px 16px;background:var(--surface);display:flex;gap:8px}
-.action-btn{flex:1;padding:10px;border-radius:10px;border:none;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s}
+.badge.orange{background:rgba(240,136,62,.12);color:var(--orange);border:1px solid rgba(240,136,62,.25)}
+.badge.red{background:rgba(224,82,82,.12);color:var(--red);border:1px solid rgba(224,82,82,.25)}
+.badge.blue{background:rgba(91,156,246,.12);color:var(--blue);border:1px solid rgba(91,156,246,.25)}
+.badge.muted{background:var(--surface);color:var(--muted);border:1px solid var(--border)}
+.items-txt{font-size:13px;color:var(--muted);margin-bottom:10px;line-height:1.6}
+.bottom-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.narx{font-size:16px;font-weight:700;color:var(--accent)}
+.action-btn{padding:9px 20px;border-radius:10px;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s}
 .action-btn:active{transform:scale(.97)}
-.btn-boshlash{background:var(--orange);color:#000}
-.btn-tayyor{background:var(--green);color:#000}
-.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:12px;grid-column:1/-1}
-.empty-icon{font-size:60px}
-.empty-txt{font-size:18px;color:var(--muted)}
-.pulse{width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block;margin-right:6px;animation:pulse 1.5s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.btn-yetkazish{background:var(--green);color:#000}
+.empty{text-align:center;padding:60px 20px;color:var(--muted);font-size:15px}
+.empty-icon{font-size:48px;margin-bottom:12px}
+.stollar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.stol-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center}
+.stol-card.tayyor{border-color:var(--green);background:#0b1f14}
+.stol-card.aktiv{border-color:var(--blue);background:#0a1520}
+.stol-card.band{border-color:var(--orange);background:#1e1000}
+.stol-num{font-size:22px;font-weight:800;margin-bottom:4px}
+.stol-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
 </style>
 </head>
 <body>
 <header>
   <div>
-    <div class="logo">👨‍🍳 OSHXONA</div>
+    <div class="logo">🧑‍💼 OFITSIANT</div>
     <div style="font-size:11px;color:var(--muted);margin-top:2px"><span class="pulse"></span>Real vaqtda yangilanadi</div>
   </div>
-  <div>
-    <div class="counter-badge" id="yangi-count">0 yangi</div>
-    <div style="font-size:11px;color:var(--muted);text-align:right;margin-top:4px" id="clock"></div>
-  </div>
+  <div style="font-size:12px;color:var(--muted)" id="clock"></div>
 </header>
-<div class="main" id="main"></div>
+<div class="tabs">
+  <button class="tab active" onclick="showTab('tayyor',this)">Tayyor <span class="count-dot" id="cnt-tayyor">0</span></button>
+  <button class="tab" onclick="showTab('barchasi',this)">Barchasi</button>
+  <button class="tab" onclick="showTab('stollar',this)">Stollar</button>
+</div>
+<div class="main">
+  <div class="section active" id="sec-tayyor"><div id="list-tayyor"></div></div>
+  <div class="section" id="sec-barchasi"><div id="list-barchasi"></div></div>
+  <div class="section" id="sec-stollar"><div class="stollar-grid" id="stol-grid"></div></div>
+</div>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 <script>
 const firebaseConfig={databaseURL:"https://shaffof-menyu-default-rtdb.firebaseio.com"};
 firebase.initializeApp(firebaseConfig);
 const db=firebase.database();
-let prevIds=new Set();
+function showTab(name,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));el.classList.add('active');document.getElementById('sec-'+name).classList.add('active');}
 db.ref('buyurtmalar').on('value',snap=>{
   let val=snap.val();
-  let buyurtmalar=val?Object.values(val).filter(b=>b.holat!=='yetkazildi'):[];
-  let yangi=buyurtmalar.filter(b=>b.holat==='yangi');
-  document.getElementById('yangi-count').textContent=yangi.length+' yangi';
-  document.getElementById('yangi-count').className='counter-badge'+(yangi.length>0?' ping':'');
-  let currentIds=new Set(buyurtmalar.map(b=>b.id));
-  let hasNew=[...currentIds].some(id=>!prevIds.has(id));
-  if(hasNew&&prevIds.size>0)playSound();
-  prevIds=currentIds;
-  let el=document.getElementById('main');
-  if(!buyurtmalar.length){el.innerHTML='<div class="empty"><div class="empty-icon">✓</div><div class="empty-txt">Barcha buyurtmalar bajarildi</div></div>';return;}
-  let sorted=[...buyurtmalar.filter(b=>b.holat==='yangi'),...buyurtmalar.filter(b=>b.holat==='tayyorlanmoqda'),...buyurtmalar.filter(b=>b.holat==='tayyor')];
-  el.innerHTML=sorted.map(b=>`<div class="order-card ${b.holat}"><div class="card-header ${b.holat}"><div><div class="order-id">${b.id}</div><div class="order-meta">Stol ${b.stol} · ${b.vaqt}</div></div><span class="badge ${b.holat==='yangi'?'red':b.holat==='tayyorlanmoqda'?'orange':'green'}">${b.holat==='yangi'?'🔴 Yangi':b.holat==='tayyorlanmoqda'?'🟠 Tayyorlanmoqda':'✅ Tayyor'}</span></div><div class="items-list">${b.items.map(i=>`<div class="item-row"><span class="item-nom">${i.nom}</span><span class="item-qty">×${i.qty}</span></div>`).join('')}</div><div class="card-footer">${b.holat==='yangi'?`<button class="action-btn btn-boshlash" onclick="boshla('${b.id}')">🍳 Tayyorlashni boshlash</button>`:''}${b.holat==='tayyorlanmoqda'?`<button class="action-btn btn-tayyor" onclick="tayyor('${b.id}')">✅ Tayyor!</button>`:''}${b.holat==='tayyor'?'<div style="flex:1;text-align:center;color:var(--green);font-weight:700">✓ Ofitsiant kutmoqda</div>':''}</div></div>`).join('');
+  let buyurtmalar=val?Object.values(val):[];
+  let tayyor=buyurtmalar.filter(b=>b.holat==='tayyor');
+  document.getElementById('cnt-tayyor').textContent=tayyor.length;
+  let lt=document.getElementById('list-tayyor');
+  lt.innerHTML=tayyor.length?tayyor.map(b=>orderHTML(b)).join(''):'<div class="empty"><div class="empty-icon">✓</div>Hozircha tayyor buyurtma yo\'q</div>';
+  let la=document.getElementById('list-barchasi');
+  la.innerHTML=buyurtmalar.length?[...buyurtmalar.filter(b=>b.holat==='tayyor'),...buyurtmalar.filter(b=>b.holat==='tayyorlanmoqda'),...buyurtmalar.filter(b=>b.holat==='yangi'),...buyurtmalar.filter(b=>b.holat==='yetkazildi')].map(b=>orderHTML(b)).join(''):'<div class="empty"><div class="empty-icon">📋</div>Hozircha buyurtma yo\'q</div>';
 });
-function boshla(id){db.ref('buyurtmalar/'+id).update({holat:'tayyorlanmoqda'});}
-function tayyor(id){db.ref('buyurtmalar/'+id).update({holat:'tayyor'});db.ref('buyurtmalar/'+id).once('value',snap=>{let b=snap.val();if(b)db.ref('stollar/'+b.stol).update({holat:'tayyor'});});}
-function playSound(){try{let ctx=new AudioContext();[440,550,660].forEach((f,i)=>{let o=ctx.createOscillator();let g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=f;g.gain.setValueAtTime(.3,ctx.currentTime+i*.15);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+i*.15+.2);o.start(ctx.currentTime+i*.15);o.stop(ctx.currentTime+i*.15+.2);});}catch(e){}}
+db.ref('stollar').on('value',snap=>{
+  let val=snap.val();
+  let stollar=val?Object.values(val):[];
+  document.getElementById('stol-grid').innerHTML=stollar.map(s=>`<div class="stol-card ${s.holat}"><div class="stol-num">${s.id}</div><div class="stol-lbl" style="color:${s.holat==='bosh'?'var(--muted)':s.holat==='aktiv'?'var(--blue)':s.holat==='band'?'var(--orange)':'var(--green)'}">${s.holat==='bosh'?'Bo\'sh':s.holat==='aktiv'?'Aktiv':s.holat==='band'?'Band':'Tayyor'}</div></div>`).join('');
+});
+function orderHTML(b){
+  let bColor=b.holat==='yangi'?'red':b.holat==='tayyorlanmoqda'?'orange':b.holat==='tayyor'?'green':'muted';
+  let bLabel=b.holat==='yangi'?'Yangi':b.holat==='tayyorlanmoqda'?'Tayyorlanmoqda':b.holat==='tayyor'?'✅ Tayyor':'Yetkazildi';
+  return`<div class="order-card ${b.holat}"><div class="top-row"><div style="display:flex;align-items:center;gap:8px"><span class="order-id">${b.id}</span><span class="badge blue">Stol ${b.stol}</span><span class="badge ${bColor}">${bLabel}</span></div><span style="font-size:12px;color:var(--muted)">${b.vaqt}</span></div><div class="items-txt">${b.items.map(i=>`${i.nom} ×${i.qty}`).join(' · ')}</div><div class="bottom-row"><span class="narx">${b.jami.toLocaleString()} so'm</span>${b.holat==='tayyor'?`<button class="action-btn btn-yetkazish" onclick="yetkazish('${b.id}',${b.stol})">✓ Yetkazildi</button>`:''}${b.holat==='yetkazildi'?'<span class="badge muted">✓ Yetkazildi</span>':''}</div></div>`;
+}
+function yetkazish(id,stol){db.ref('buyurtmalar/'+id).update({holat:'yetkazildi'});db.ref('stollar/'+stol).update({holat:'bosh',buyurtmaId:''});}
 function clock(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('uz',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
 setInterval(clock,1000);clock();
 </script>
