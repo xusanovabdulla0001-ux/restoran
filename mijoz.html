@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Menyu</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#0a0a0a;--surface:#141414;--card:#1c1c1c;--border:#2a2a2a;--text:#f0f0f0;--muted:#888;--accent:#f5c842;--accent2:#e8a020;--green:#4caf72;--red:#e05252;--blue:#5b9cf6}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-size:15px;font-weight:700;color:var(--accent)}
+.stol-tag{background:#1e2000;color:var(--accent);padding:5px 14px;border-radius:20px;font-size:13px;font-weight:600;border:1px solid #3a3a00}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:14px 16px 10px;scrollbar-width:none;position:sticky;top:57px;z-index:90;background:var(--bg)}
+.cats::-webkit-scrollbar{display:none}
+.cat-btn{padding:7px 16px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:13px;cursor:pointer;white-space:nowrap;transition:all .15s;font-family:inherit}
+.cat-btn.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:600}
+.menu-body{flex:1;overflow-y:auto;padding:0 16px 120px}
+.cat-section{margin-bottom:24px}
+.cat-title{font-size:13px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:12px 0 8px;border-bottom:1px solid var(--border);margin-bottom:10px}
+.taom-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:10px;transition:border .15s}
+.taom-card:active{border-color:var(--accent)}
+.taom-img{width:100%;height:140px;object-fit:cover;display:block}
+.taom-img-placeholder{width:100%;height:80px;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:36px}
+.taom-body{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.taom-nom{font-size:15px;font-weight:600;margin-bottom:2px}
+.taom-tavsif{font-size:12px;color:var(--muted);margin-bottom:6px}
+.taom-narx{font-size:16px;font-weight:700;color:var(--accent)}
+.counter-row{display:flex;align-items:center;gap:8px}
+.cnt-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;line-height:1;transition:all .15s}
+.cnt-btn:active{background:var(--accent);color:#000;border-color:var(--accent)}
+.cnt-val{font-size:16px;font-weight:700;min-width:20px;text-align:center}
+.footer{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:12px 16px}
+.sepet-bar{background:var(--accent);color:#000;border-radius:12px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-weight:700;font-size:15px;border:none;width:100%;font-family:inherit}
+.sepet-bar.hidden{display:none}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:flex;flex-direction:column;justify-content:flex-end}
+.modal.hidden{display:none}
+.modal-content{background:var(--surface);border-radius:20px 20px 0 0;padding:20px;max-height:80vh;overflow-y:auto}
+.modal-title{font-size:17px;font-weight:700;margin-bottom:16px;text-align:center}
+.sepet-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
+.jami-row{display:flex;justify-content:space-between;padding:14px 0;font-size:16px;font-weight:700}
+.confirm-btn{background:var(--accent);color:#000;border:none;border-radius:12px;padding:14px;width:100%;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px}
+.cancel-btn{background:transparent;color:var(--muted);border:none;border-radius:12px;padding:10px;width:100%;font-size:14px;cursor:pointer;font-family:inherit;margin-top:4px}
+.success-screen{display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;min-height:100vh;background:var(--bg)}
+.success-icon{font-size:60px;margin-bottom:16px}
+.success-title{font-size:22px;font-weight:700;margin-bottom:8px}
+.success-sub{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.6}
+.new-btn{background:var(--accent);color:#000;border:none;border-radius:12px;padding:14px 32px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+.status-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin:0 16px 12px;font-size:13px;text-align:center;color:var(--muted);display:none}
+</style>
+</head>
+<body>
+<div id="main-screen">
+<header>
+  <div class="logo">⬛ RESTORAN</div>
+  <div class="stol-tag" id="stol-tag">Stol —</div>
+</header>
+<div id="status-card" class="status-card"></div>
+<div class="cats" id="cats"></div>
+<div class="menu-body" id="menu-body"></div>
+<div class="footer">
+  <button class="sepet-bar hidden" id="sepet-bar" onclick="openModal()">
+    <span id="sepet-count">0 ta</span>
+    <span>Buyurtma berish →</span>
+    <span id="sepet-sum">0 so'm</span>
+  </button>
+</div>
+</div>
+<div class="modal hidden" id="modal">
+  <div class="modal-content">
+    <div class="modal-title">Buyurtmangizni tasdiqlang</div>
+    <div id="modal-items"></div>
+    <div class="jami-row"><span>Jami:</span><span id="modal-jami" style="color:var(--accent)"></span></div>
+    <button class="confirm-btn" onclick="buyurtmaYuborish()">✅ Tasdiqlash</button>
+    <button class="cancel-btn" onclick="closeModal()">Orqaga</button>
+  </div>
+</div>
+<div class="success-screen" id="success-screen">
+  <div class="success-icon">✅</div>
+  <div class="success-title">Buyurtma qabul qilindi!</div>
+  <div class="success-sub">Oshxona tayyorlayapti.<br>Ofitsiant ko'p o'tmay olib keladi.</div>
+  <button class="new-btn" onclick="yangiOrder()">+ Yana buyurtma berish</button>
+</div>
+<script>
+function getDB(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch{return d}}
+function setDB(k,v){localStorage.setItem(k,JSON.stringify(v))}
+let stolId=1,sepet={};
+function init(){let p=new URLSearchParams(location.search);stolId=parseInt(p.get('stol'))||1;document.getElementById('stol-tag').textContent='Stol '+stolId;document.title='Stol '+stolId+' — Menyu';renderMenu();checkStatus();setInterval(()=>{renderMenu();checkStatus();},5000);}
+function checkStatus(){let buyurtmalar=getDB('r_buyurtmalar',[]);let last=buyurtmalar.filter(b=>b.stol===stolId).slice(-1)[0];let sc=document.getElementById('status-card');if(last&&last.holat!=='yetkazildi'){let icon=last.holat==='yangi'?'⏳':last.holat==='tayyorlanmoqda'?'🍳':'🛎️';let txt=last.holat==='yangi'?'Buyurtmangiz qabul qilindi...':last.holat==='tayyorlanmoqda'?'Oshxona tayyorlayapti...':'Tayyor! Ofitsiant olib keladi...';sc.style.display='block';sc.innerHTML=`${icon} <b style="color:var(--text)">${last.id}</b> — ${txt}`;if(last.holat==='tayyor')sc.style.background='#0b1f14';}else{sc.style.display='none';}}
+function renderMenu(){let menyu=getDB('r_menyu',[]).filter(m=>m.holat==='aktiv');let cats=[...new Set(menyu.map(m=>m.kat))];let catEl=document.getElementById('cats');let prev=catEl.querySelector('.cat-btn.active')?.dataset?.cat||cats[0];catEl.innerHTML=cats.map(c=>`<button class="cat-btn${c===prev?' active':''}" data-cat="${c}" onclick="scrollCat('${c}',this)">${c}</button>`).join('');document.getElementById('menu-body').innerHTML=cats.map(cat=>`<div class="cat-section" id="sec-${CSS.escape(cat)}"><div class="cat-title">${cat}</div>${menyu.filter(m=>m.kat===cat).map(m=>`<div class="taom-card">${m.rasm?`<img src="${m.rasm}" class="taom-img"/>`:`<div class="taom-img-placeholder">🍽️</div>`}<div class="taom-body"><div style="flex:1"><div class="taom-nom">${m.nom}</div>${m.tavsif?`<div class="taom-tavsif">${m.tavsif}</div>`:''}<div class="taom-narx">${m.narx.toLocaleString()} so'm</div></div><div class="counter-row"><button class="cnt-btn" onclick="dec(${m.id})">−</button><div class="cnt-val" id="cnt-${m.id}">${sepet[m.id]||0}</div><button class="cnt-btn" onclick="inc(${m.id})">+</button></div></div></div>`).join('')}</div>`).join('');updateBar();}
+function scrollCat(cat,btn){document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');let sec=document.getElementById('sec-'+CSS.escape(cat));if(sec)sec.scrollIntoView({behavior:'smooth',block:'start'});}
+function inc(id){sepet[id]=(sepet[id]||0)+1;document.getElementById('cnt-'+id).textContent=sepet[id];updateBar();}
+function dec(id){if(!sepet[id])return;sepet[id]--;if(!sepet[id])delete sepet[id];document.getElementById('cnt-'+id).textContent=sepet[id]||0;updateBar();}
+function updateBar(){let menyu=getDB('r_menyu',[]);let items=Object.entries(sepet).map(([id,qty])=>{let m=menyu.find(x=>x.id==id);return m?{...m,qty}:null;}).filter(Boolean);let jami=items.reduce((a,x)=>a+x.narx*x.qty,0);let count=items.reduce((a,x)=>a+x.qty,0);let bar=document.getElementById('sepet-bar');if(count>0){bar.classList.remove('hidden');document.getElementById('sepet-count').textContent=count+' ta';document.getElementById('sepet-sum').textContent=jami.toLocaleString()+' so\'m';}else{bar.classList.add('hidden');}}
+function openModal(){let menyu=getDB('r_menyu',[]);let items=Object.entries(sepet).map(([id,qty])=>{let m=menyu.find(x=>x.id==id);return m?{...m,qty}:null;}).filter(Boolean);let jami=items.reduce((a,x)=>a+x.narx*x.qty,0);document.getElementById('modal-items').innerHTML=items.map(i=>`<div class="sepet-item"><span>${i.nom} <span style="color:var(--muted)">×${i.qty}</span></span><span style="color:var(--accent);font-weight:600">${(i.narx*i.qty).toLocaleString()}</span></div>`).join('');document.getElementById('modal-jami').textContent=jami.toLocaleString()+' so\'m';document.getElementById('modal').classList.remove('hidden');}
+function closeModal(){document.getElementById('modal').classList.add('hidden')}
+function buyurtmaYuborish(){let menyu=getDB('r_menyu',[]);let items=Object.entries(sepet).map(([id,qty])=>{let m=menyu.find(x=>x.id==id);return m?{nom:m.nom,narx:m.narx,qty}:null;}).filter(Boolean);if(!items.length)return;let jami=items.reduce((a,x)=>a+x.narx*x.qty,0);let buyurtmalar=getDB('r_buyurtmalar',[]);let id='#'+(1000+buyurtmalar.length+1);buyurtmalar.push({id,stol:stolId,items,jami,holat:'yangi',vaqt:new Date().toLocaleTimeString('uz',{hour:'2-digit',minute:'2-digit'})});setDB('r_buyurtmalar',buyurtmalar);let stollar=getDB('r_stollar',[]);let s=stollar.find(x=>x.id===stolId);if(s){s.holat='aktiv';s.buyurtmaId=id;}setDB('r_stollar',stollar);sepet={};closeModal();document.getElementById('main-screen').style.display='none';document.getElementById('success-screen').style.display='flex';}
+function yangiOrder(){document.getElementById('main-screen').style.display='block';document.getElementById('success-screen').style.display='none';renderMenu();}
+init();
+</script>
+</body>
+</html>
