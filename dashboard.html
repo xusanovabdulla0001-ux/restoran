@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Shaffof Menyu</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0a;--surface:#141414;--card:#1c1c1c;--border:#2a2a2a;--text:#f0f0f0;--muted:#888;--accent:#f5c842;--green:#4caf72;--red:#e05252;--blue:#5b9cf6;--orange:#f0883e}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-size:16px;font-weight:800;color:var(--accent);letter-spacing:1px}
+.restoran-nom{font-size:14px;font-weight:600;color:var(--text)}
+.plan-badge{font-size:11px;padding:3px 10px;border-radius:20px;background:#1e1e00;color:var(--accent);border:1px solid #3a3a00;margin-left:8px}
+.btn-chiq{padding:7px 14px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:13px;cursor:pointer;font-family:inherit}
+.btn-chiq:hover{border-color:var(--red);color:var(--red)}
+.main{max-width:1000px;margin:0 auto;padding:24px 16px}
+.section-title{font-size:18px;font-weight:700;margin-bottom:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 20px}
+.stat-val{font-size:30px;font-weight:800;color:var(--accent);margin-bottom:4px}
+.stat-lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.link-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;text-decoration:none;color:var(--text);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;transition:all .2s;cursor:pointer}
+.link-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.link-icon{font-size:32px}
+.link-title{font-size:14px;font-weight:700}
+.link-desc{font-size:12px;color:var(--muted)}
+.sep{height:1px;background:var(--border);margin:24px 0}
+.stol-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:24px}
+.stol-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 8px;text-align:center}
+.stol-card.tayyor{border-color:var(--green);background:#0b1f14}
+.stol-card.aktiv{border-color:var(--blue);background:#0a1520}
+.stol-card.band{border-color:var(--orange);background:#1e1000}
+.stol-num{font-size:20px;font-weight:800;margin-bottom:4px}
+.stol-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.orders-list{display:flex;flex-direction:column;gap:8px}
+.order-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-left:3px solid var(--border)}
+.order-item.yangi{border-left-color:var(--red)}
+.order-item.tayyorlanmoqda{border-left-color:var(--orange)}
+.order-item.tayyor{border-left-color:var(--green)}
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.badge.red{background:#2e0e0e;color:var(--red)}.badge.orange{background:#2e1c00;color:var(--orange)}.badge.green{background:#0b2e18;color:var(--green)}.badge.blue{background:#0a1f3c;color:var(--blue)}
+.url-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.url-text{color:var(--accent);font-family:monospace;font-size:12px;word-break:break-all}
+.copy-btn{padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:11px;cursor:pointer;white-space:nowrap;font-family:inherit}
+.copy-btn:hover{border-color:var(--accent);color:var(--accent)}
+.empty{text-align:center;padding:30px;color:var(--muted);font-size:14px}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;margin-right:6px;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">⬛ SHAFFOF MENYU</div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <div>
+      <span class="restoran-nom" id="restoran-nom">Yuklanmoqda...</span>
+      <span class="plan-badge" id="plan-badge">Basic</span>
+    </div>
+    <button class="btn-chiq" onclick="chiqish()">Chiqish</button>
+  </div>
+</header>
+
+<div class="main">
+  <div style="margin-bottom:16px;font-size:12px;color:var(--muted)"><span class="pulse"></span>Real vaqtda yangilanadi</div>
+
+  <!-- Statistika -->
+  <div class="grid3">
+    <div class="stat-card"><div class="stat-val" id="stat-buyurtma">0</div><div class="stat-lbl">Bugungi buyurtma</div></div>
+    <div class="stat-card"><div class="stat-val" id="stat-daromad">0</div><div class="stat-lbl">Daromad (so'm)</div></div>
+    <div class="stat-card"><div class="stat-val" id="stat-stol">0</div><div class="stat-lbl">Faol stollar</div></div>
+  </div>
+
+  <!-- Tezkor havolalar -->
+  <div class="section-title">Ekranlar</div>
+  <div class="grid2" id="ekranlar-grid"></div>
+
+  <div class="sep"></div>
+
+  <!-- URL lar -->
+  <div class="section-title">🔗 Planshet URL lari</div>
+  <div id="url-list"></div>
+
+  <div class="sep"></div>
+
+  <!-- Stollar -->
+  <div class="section-title">Stollar holati</div>
+  <div class="stol-grid" id="stol-grid"></div>
+
+  <div class="sep"></div>
+
+  <!-- Buyurtmalar -->
+  <div class="section-title">Oxirgi buyurtmalar</div>
+  <div class="orders-list" id="orders-list"></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig={apiKey:"AIzaSyplaceholder",authDomain:"shaffof-menyu.firebaseapp.com",databaseURL:"https://shaffof-menyu-default-rtdb.firebaseio.com",projectId:"shaffof-menyu"};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth();
+const db=firebase.database();
+
+let rid=new URLSearchParams(location.search).get('rid');
+let base=location.origin+location.pathname.replace('dashboard.html','');
+
+auth.onAuthStateChanged(user=>{
+  if(!user){location.href='login.html';return;}
+  if(!rid){
+    db.ref('foydalanuvchilar/'+user.uid).once('value',snap=>{
+      let d=snap.val();
+      if(d){rid=d.rid;loadData();}
+      else{location.href='login.html';}
+    });
+  } else {loadData();}
+});
+
+function loadData(){
+  db.ref('restoranlar/'+rid).on('value',snap=>{
+    let d=snap.val();
+    if(!d)return;
+    document.getElementById('restoran-nom').textContent=d.nom;
+    document.getElementById('plan-badge').textContent=d.plan==='pro'?'🥇 Pro':'🥉 Basic';
+    document.title=d.nom+' — Dashboard';
+
+    // Ekranlar
+    document.getElementById('ekranlar-grid').innerHTML=`
+      <a class="link-card" href="admin.html" target="_blank"><div class="link-icon">⚙️</div><div class="link-title">Admin Panel</div><div class="link-desc">Menyu va stollar boshqaruvi</div></a>
+      <a class="link-card" href="oshxona.html" target="_blank"><div class="link-icon">👨‍🍳</div><div class="link-title">Oshxona</div><div class="link-desc">Buyurtmalarni tayyorlash</div></a>
+      <a class="link-card" href="ofitsiant.html" target="_blank"><div class="link-icon">🧑‍💼</div><div class="link-title">Ofitsiant</div><div class="link-desc">Buyurtmalarni yetkazish</div></a>
+      <a class="link-card" href="mijoz.html?stol=1" target="_blank"><div class="link-icon">📱</div><div class="link-title">Mijoz (demo)</div><div class="link-desc">Stol 1 menyu</div></a>
+    `;
+
+    // URL lar
+    let stol=d.stol||13;
+    let urls='';
+    for(let i=1;i<=stol;i++){
+      let url=base+'mijoz.html?stol='+i;
+      urls+=`<div class="url-box"><div><div style="font-size:11px;color:var(--muted);margin-bottom:2px">Stol ${i}</div><div class="url-text">${url}</div></div><button class="copy-btn" onclick="copy('${url}',this)">Nusxa</button></div>`;
+    }
+    document.getElementById('url-list').innerHTML=urls;
+
+    // Stollar
+    let stollar=d.stollar?Object.values(d.stollar):[];
+    document.getElementById('stol-grid').innerHTML=stollar.map(s=>`
+      <div class="stol-card ${s.holat}">
+        <div class="stol-num">${s.id}</div>
+        <div class="stol-lbl" style="color:${s.holat==='bosh'?'var(--muted)':s.holat==='aktiv'?'var(--blue)':s.holat==='band'?'var(--orange)':'var(--green)'}">${s.holat==='bosh'?'Bo\'sh':s.holat==='aktiv'?'Aktiv':s.holat==='band'?'Band':'Tayyor'}</div>
+      </div>`).join('');
+
+    // Buyurtmalar
+    let buyurtmalar=d.buyurtmalar?Object.values(d.buyurtmalar):[];
+    let faolStollar=stollar.filter(s=>s.holat!=='bosh').length;
+    document.getElementById('stat-stol').textContent=faolStollar;
+    document.getElementById('stat-buyurtma').textContent=buyurtmalar.length;
+    document.getElementById('stat-daromad').textContent=buyurtmalar.reduce((a,x)=>a+x.jami,0).toLocaleString();
+
+    let el=document.getElementById('orders-list');
+    if(!buyurtmalar.length){el.innerHTML='<div class="empty">Hozircha buyurtma yo\'q</div>';return;}
+    el.innerHTML=buyurtmalar.slice().reverse().slice(0,10).map(b=>`
+      <div class="order-item ${b.holat}">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-weight:700;font-size:15px">${b.id}</span>
+          <span class="badge blue">Stol ${b.stol}</span>
+          <span class="badge ${b.holat==='yangi'?'red':b.holat==='tayyorlanmoqda'?'orange':'green'}">${b.holat==='yangi'?'Yangi':b.holat==='tayyorlanmoqda'?'Tayyorlanmoqda':b.holat==='tayyor'?'Tayyor':'Yetkazildi'}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span style="font-weight:700;color:var(--accent)">${b.jami.toLocaleString()} so'm</span>
+          <span style="font-size:12px;color:var(--muted)">${b.vaqt}</span>
+        </div>
+      </div>`).join('');
+  });
+}
+
+function copy(url,btn){
+  navigator.clipboard.writeText(url).then(()=>{
+    btn.textContent='✓ Nusxalandi';
+    setTimeout(()=>btn.textContent='Nusxa',2000);
+  });
+}
+
+function chiqish(){
+  auth.signOut().then(()=>location.href='login.html');
+}
+</script>
+</body>
+</html>
