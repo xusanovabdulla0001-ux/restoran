@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ro'yxatdan o'tish — Shaffof Menyu</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0a;--surface:#141414;--card:#1c1c1c;--border:#2a2a2a;--text:#f0f0f0;--muted:#888;--accent:#f5c842;--red:#e05252;--green:#4caf72}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.box{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;width:100%;max-width:420px}
+.logo{font-size:24px;font-weight:800;color:var(--accent);letter-spacing:2px;text-align:center;margin-bottom:6px}
+.tagline{font-size:13px;color:var(--muted);text-align:center;margin-bottom:28px}
+.title{font-size:18px;font-weight:700;margin-bottom:20px;text-align:center}
+.form-row{margin-bottom:14px}
+label{font-size:12px;color:var(--muted);display:block;margin-bottom:5px}
+input,select{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;background:var(--surface);color:var(--text);font-family:inherit;outline:none;transition:border .15s}
+input:focus,select:focus{border-color:var(--accent)}
+.btn{width:100%;padding:12px;border-radius:10px;border:none;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:6px;transition:all .15s}
+.btn.primary{background:var(--accent);color:#000}
+.btn.primary:hover{background:#e8a020}
+.sep{text-align:center;font-size:13px;color:var(--muted);margin:16px 0}
+.link{color:var(--accent);text-decoration:none;font-weight:600}
+.link:hover{text-decoration:underline}
+.msg{padding:10px 14px;border-radius:10px;font-size:13px;margin-top:12px;text-align:center;display:none}
+.msg.error{background:#2e0e0e;color:var(--red);border:1px solid #5a1a1a}
+.msg.success{background:#0b2e18;color:var(--green);border:1px solid #1a5a2e}
+.plan-card{border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:all .15s}
+.plan-card:hover,.plan-card.active{border-color:var(--accent);background:#1e1e00}
+.plan-card.active .plan-check{color:var(--accent)}
+.plan-top{display:flex;align-items:center;justify-content:space-between}
+.plan-name{font-weight:700;font-size:14px}
+.plan-price{font-weight:800;color:var(--accent);font-size:15px}
+.plan-desc{font-size:12px;color:var(--muted);margin-top:4px}
+.plan-check{color:transparent;font-size:18px}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="logo">⬛ SHAFFOF MENYU</div>
+  <div class="tagline">Restoran uchun aqlli buyurtma tizimi</div>
+  <div class="title">Ro'yxatdan o'tish</div>
+
+  <div class="form-row">
+    <label>Restoran nomi</label>
+    <input id="restoran-nom" placeholder="Masalan: Samarqand Oshi" type="text"/>
+  </div>
+  <div class="form-row">
+    <label>Email</label>
+    <input id="email" placeholder="email@gmail.com" type="email"/>
+  </div>
+  <div class="form-row">
+    <label>Parol</label>
+    <input id="parol" placeholder="Kamida 6 ta belgi" type="password"/>
+  </div>
+  <div class="form-row">
+    <label>Stol soni</label>
+    <select id="stol-soni">
+      <option value="5">5 ta stol</option>
+      <option value="10">10 ta stol</option>
+      <option value="13" selected>13 ta stol</option>
+      <option value="20">20 ta stol</option>
+      <option value="30">30 ta stol</option>
+    </select>
+  </div>
+
+  <div class="form-row">
+    <label>Obuna rejasi</label>
+    <div class="plan-card active" id="plan-basic" onclick="selectPlan('basic')">
+      <div class="plan-top">
+        <span class="plan-name">🥉 Basic</span>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="plan-price">99 000 so'm/oy</span>
+          <span class="plan-check" id="check-basic">✓</span>
+        </div>
+      </div>
+      <div class="plan-desc">13 ta stol, menyu boshqaruvi, oshxona ekrani</div>
+    </div>
+    <div class="plan-card" id="plan-pro" onclick="selectPlan('pro')">
+      <div class="plan-top">
+        <span class="plan-name">🥇 Pro</span>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="plan-price">199 000 so'm/oy</span>
+          <span class="plan-check" id="check-pro">✓</span>
+        </div>
+      </div>
+      <div class="plan-desc">30 ta stol, statistika, PDF hisobot, QR kodlar</div>
+    </div>
+  </div>
+
+  <button class="btn primary" onclick="register()">✅ Ro'yxatdan o'tish</button>
+  <div class="msg" id="msg"></div>
+  <div class="sep">Akkauntingiz bormi? <a href="login.html" class="link">Kirish</a></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig={apiKey:"AIzaSyplaceholder",authDomain:"shaffof-menyu.firebaseapp.com",databaseURL:"https://shaffof-menyu-default-rtdb.firebaseio.com",projectId:"shaffof-menyu"};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth();
+const db=firebase.database();
+
+let selectedPlan='basic';
+
+function selectPlan(plan){
+  selectedPlan=plan;
+  document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.plan-check').forEach(c=>c.style.color='transparent');
+  document.getElementById('plan-'+plan).classList.add('active');
+  document.getElementById('check-'+plan).style.color='var(--accent)';
+}
+
+function showMsg(txt,type){
+  let el=document.getElementById('msg');
+  el.textContent=txt;el.className='msg '+type;el.style.display='block';
+}
+
+function register(){
+  let nom=document.getElementById('restoran-nom').value.trim();
+  let email=document.getElementById('email').value.trim();
+  let parol=document.getElementById('parol').value;
+  let stol=parseInt(document.getElementById('stol-soni').value);
+  if(!nom){showMsg('Restoran nomini kiriting!','error');return;}
+  if(!email){showMsg('Email kiriting!','error');return;}
+  if(parol.length<6){showMsg('Parol kamida 6 ta belgi bo\'lsin!','error');return;}
+  showMsg('Ro\'yxatdan o\'tilmoqda...','success');
+  auth.createUserWithEmailAndPassword(email,parol).then(uc=>{
+    let uid=uc.user.uid;
+    let rid='R'+Math.random().toString(36).substr(2,6).toUpperCase();
+    let stollar=Array.from({length:stol},(_,i)=>({id:i+1,holat:'bosh',buyurtmaId:''}));
+    let menyuDefault=[
+      {id:1,nom:"Osh",narx:35000,kat:"🍖 Asosiy taomlar",tavsif:"An'anaviy o'zbek oshi",holat:"aktiv",rasm:""},
+      {id:2,nom:"Lag'mon",narx:28000,kat:"🍖 Asosiy taomlar",tavsif:"Qo'lda yasalgan",holat:"aktiv",rasm:""},
+      {id:3,nom:"Shurva",narx:22000,kat:"🍜 Sho'rvalar",tavsif:"Go'sht va sabzavotli",holat:"aktiv",rasm:""},
+      {id:4,nom:"Ko'k choy",narx:5000,kat:"🥤 Ichimliklar",tavsif:"",holat:"aktiv",rasm:""},
+    ];
+    let menuObj={};menyuDefault.forEach(m=>menuObj[m.id]=m);
+    let stolObj={};stollar.forEach(s=>stolObj[s.id]=s);
+    db.ref('restoranlar/'+rid).set({
+      nom,email,uid,plan:selectedPlan,stol,
+      created:new Date().toISOString(),
+      menyu:menuObj,stollar:stolObj,buyurtmalar:{}
+    }).then(()=>{
+      db.ref('foydalanuvchilar/'+uid).set({rid,nom,email,plan:selectedPlan});
+      showMsg('✅ Muvaffaqiyatli ro\'yxatdan o\'tdingiz!','success');
+      setTimeout(()=>location.href='dashboard.html?rid='+rid,1500);
+    });
+  }).catch(e=>{
+    let txt=e.code==='auth/email-already-in-use'?'Bu email allaqachon ro\'yxatdan o\'tgan!':e.code==='auth/invalid-email'?'Email noto\'g\'ri!':'Xatolik: '+e.message;
+    showMsg(txt,'error');
+  });
+}
+</script>
+</body>
+</html>
