@@ -29,13 +29,13 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
 <div class="logo">⬛ RESTORAN</div>
 <div class="sub">Buyurtma boshqaruv tizimi</div>
 <div class="grid">
-  <a href="admin.html" class="link-card"><div class="link-icon">⚙️</div><div class="link-title">Admin Panel</div><div class="link-desc">Menyu, stollar va statistika boshqaruvi</div></a>
-  <a href="oshxona.html" class="link-card"><div class="link-icon">👨‍🍳</div><div class="link-title">Oshxona</div><div class="link-desc">Yangi buyurtmalarni ko'rish va tayyorlash</div></a>
+  <a href="admin.html" class="link-card"><div class="link-icon">⚙️</div><div class="link-title">Admin Panel</div><div class="link-desc">Menyu, stollar va statistika</div></a>
+  <a href="oshxona.html" class="link-card"><div class="link-icon">👨‍🍳</div><div class="link-title">Oshxona</div><div class="link-desc">Yangi buyurtmalarni tayyorlash</div></a>
   <a href="ofitsiant.html" class="link-card"><div class="link-icon">🧑‍💼</div><div class="link-title">Ofitsiant</div><div class="link-desc">Tayyor buyurtmalarni yetkazish</div></a>
-  <a href="mijoz.html?stol=1" class="link-card"><div class="link-icon">📱</div><div class="link-title">Mijoz (demo)</div><div class="link-desc">Stol 1 — menyu va buyurtma berish</div></a>
+  <a href="mijoz.html?stol=1" class="link-card"><div class="link-icon">📱</div><div class="link-title">Mijoz (demo)</div><div class="link-desc">Stol 1 — menyu va buyurtma</div></a>
 </div>
 <div class="sep"></div>
-<div class="stol-title">📱 Mijoz planshetlari (13 ta stol)</div>
+<div class="stol-title">📱 13 ta stol planshetlari</div>
 <div class="stol-grid">
   <a href="mijoz.html?stol=1" class="stol-link"><div class="stol-num">1</div>Stol</a>
   <a href="mijoz.html?stol=2" class="stol-link"><div class="stol-num">2</div>Stol</a>
@@ -51,6 +51,12 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,san
   <a href="mijoz.html?stol=12" class="stol-link"><div class="stol-num">12</div>Stol</a>
   <a href="mijoz.html?stol=13" class="stol-link"><div class="stol-num">13</div>Stol</a>
 </div>
-<div class="note">💡 Har bir stol uchun alohida URL: <code style="color:var(--accent)">mijoz.html?stol=5</code></div>
+<div class="note">💡 Firebase bilan barcha qurilmalar real vaqtda sinxronlashadi!</div>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig={databaseURL:"https://shaffof-menyu-default-rtdb.firebaseio.com"};
+firebase.initializeApp(firebaseConfig);
+</script>
 </body>
 </html>
