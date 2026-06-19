@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kirish — Shaffof Menyu</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0a;--surface:#141414;--card:#1c1c1c;--border:#2a2a2a;--text:#f0f0f0;--muted:#888;--accent:#f5c842;--red:#e05252;--green:#4caf72}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.box{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;width:100%;max-width:400px}
+.logo{font-size:24px;font-weight:800;color:var(--accent);letter-spacing:2px;text-align:center;margin-bottom:6px}
+.tagline{font-size:13px;color:var(--muted);text-align:center;margin-bottom:28px}
+.title{font-size:18px;font-weight:700;margin-bottom:20px;text-align:center}
+.form-row{margin-bottom:14px}
+label{font-size:12px;color:var(--muted);display:block;margin-bottom:5px}
+input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;background:var(--surface);color:var(--text);font-family:inherit;outline:none;transition:border .15s}
+input:focus{border-color:var(--accent)}
+.btn{width:100%;padding:12px;border-radius:10px;border:none;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:6px;transition:all .15s}
+.btn.primary{background:var(--accent);color:#000}
+.btn.primary:hover{background:#e8a020}
+.sep{text-align:center;font-size:13px;color:var(--muted);margin:16px 0}
+.link{color:var(--accent);text-decoration:none;font-weight:600}
+.link:hover{text-decoration:underline}
+.msg{padding:10px 14px;border-radius:10px;font-size:13px;margin-top:12px;text-align:center;display:none}
+.msg.error{background:#2e0e0e;color:var(--red);border:1px solid #5a1a1a}
+.msg.success{background:#0b2e18;color:var(--green);border:1px solid #1a5a2e}
+.forgot{text-align:right;margin-top:4px}
+.forgot a{font-size:12px;color:var(--muted);text-decoration:none}
+.forgot a:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="logo">⬛ SHAFFOF MENYU</div>
+  <div class="tagline">Restoran uchun aqlli buyurtma tizimi</div>
+  <div class="title">Kirish</div>
+
+  <div class="form-row">
+    <label>Email</label>
+    <input id="email" placeholder="email@gmail.com" type="email"/>
+  </div>
+  <div class="form-row">
+    <label>Parol</label>
+    <input id="parol" placeholder="Parolingiz" type="password" onkeydown="if(event.key==='Enter')login()"/>
+    <div class="forgot"><a href="#">Parolni unutdingizmi?</a></div>
+  </div>
+
+  <button class="btn primary" onclick="login()">→ Kirish</button>
+  <div class="msg" id="msg"></div>
+  <div class="sep">Akkauntingiz yo'qmi? <a href="register.html" class="link">Ro'yxatdan o'tish</a></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig={apiKey:"AIzaSyplaceholder",authDomain:"shaffof-menyu.firebaseapp.com",databaseURL:"https://shaffof-menyu-default-rtdb.firebaseio.com",projectId:"shaffof-menyu"};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth();
+const db=firebase.database();
+
+function showMsg(txt,type){
+  let el=document.getElementById('msg');
+  el.textContent=txt;el.className='msg '+type;el.style.display='block';
+}
+
+auth.onAuthStateChanged(user=>{
+  if(user){
+    db.ref('foydalanuvchilar/'+user.uid).once('value',snap=>{
+      let d=snap.val();
+      if(d) location.href='dashboard.html?rid='+d.rid;
+    });
+  }
+});
+
+function login(){
+  let email=document.getElementById('email').value.trim();
+  let parol=document.getElementById('parol').value;
+  if(!email||!parol){showMsg('Email va parolni kiriting!','error');return;}
+  showMsg('Kirilmoqda...','success');
+  auth.signInWithEmailAndPassword(email,parol).then(uc=>{
+    db.ref('foydalanuvchilar/'+uc.user.uid).once('value',snap=>{
+      let d=snap.val();
+      if(d){
+        showMsg('✅ Xush kelibsiz!','success');
+        setTimeout(()=>location.href='dashboard.html?rid='+d.rid,1000);
+      }
+    });
+  }).catch(e=>{
+    let txt=e.code==='auth/user-not-found'?'Bu email ro\'yxatdan o\'tmagan!':e.code==='auth/wrong-password'?'Parol noto\'g\'ri!':e.code==='auth/invalid-credential'?'Email yoki parol noto\'g\'ri!':'Xatolik: '+e.message;
+    showMsg(txt,'error');
+  });
+}
+</script>
+</body>
+</html>
