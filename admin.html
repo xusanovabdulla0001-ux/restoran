@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel — Restoran</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0a;--surface:#141414;--card:#1c1c1c;--border:#2a2a2a;--text:#f0f0f0;--muted:#888;--accent:#f5c842;--accent2:#e8a020;--green:#4caf72;--red:#e05252;--blue:#5b9cf6;--orange:#f0883e}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.logo{font-size:16px;font-weight:700;letter-spacing:1px;color:var(--accent)}
+.nav{display:flex;gap:4px}
+.nav a{color:var(--muted);text-decoration:none;padding:6px 14px;border-radius:6px;font-size:13px;transition:all .15s}
+.nav a:hover,.nav a.active{background:var(--card);color:var(--text)}
+.main{max-width:1100px;margin:0 auto;padding:24px 16px}
+.page{display:none}.page.active{display:block}
+.section-title{font-size:18px;font-weight:600;margin-bottom:16px;color:var(--text)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px}
+.stat-val{font-size:28px;font-weight:700;color:var(--accent);margin-bottom:2px}
+.stat-lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+.stol-btn{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:6px}
+.stol-btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.stol-btn.bosh{border-color:#2a2a2a}.stol-btn.aktiv{border-color:var(--blue);background:#0d1a2e}
+.stol-btn.band{border-color:var(--red);background:#1f0e0e}.stol-btn.tayyor{border-color:var(--green);background:#0b1f14}
+.stol-num{font-size:20px;font-weight:700}.stol-holat{font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.dot.green{background:var(--green)}.dot.red{background:var(--red)}.dot.blue{background:var(--blue)}.dot.amber{background:var(--accent)}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge.green{background:#0b2e18;color:var(--green)}.badge.red{background:#2e0e0e;color:var(--red)}
+.badge.blue{background:#0a1f3c;color:var(--blue)}.badge.amber{background:#2e2000;color:var(--accent)}
+.btn{padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;font-family:inherit}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);color:#000;border-color:var(--accent);font-weight:600}
+.btn.primary:hover{background:var(--accent2);border-color:var(--accent2);color:#000}
+.btn.danger{background:#2e0e0e;color:var(--red);border-color:#5a1a1a}.btn.sm{padding:5px 10px;font-size:12px}
+input,select,textarea{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--surface);color:var(--text);font-family:inherit;outline:none;transition:border .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
+.form-row{margin-bottom:12px}.row{display:flex;align-items:center;gap:8px}.row.between{justify-content:space-between}
+.sep{height:1px;background:var(--border);margin:20px 0}
+.menyu-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.tag{background:#1e1e00;color:var(--accent);font-size:11px;padding:2px 8px;border-radius:4px}
+.empty{text-align:center;padding:40px;color:var(--muted);font-size:14px}
+select option{background:#1c1c1c}
+.img-upload{width:100%;height:110px;border:2px dashed var(--border);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;background:var(--surface);color:var(--muted);font-size:13px;gap:6px}
+.img-upload:hover{border-color:var(--accent);color:var(--accent)}
+.img-preview{width:100%;height:110px;object-fit:cover;border-radius:10px;border:1px solid var(--border);display:none}
+.menyu-img{width:52px;height:52px;object-fit:cover;border-radius:8px;flex-shrink:0}
+.menyu-img-placeholder{width:52px;height:52px;border-radius:8px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">⬛ RESTORAN ADMIN</div>
+  <nav class="nav">
+    <a href="#" class="active" onclick="showPage('stollar',this)">Stollar</a>
+    <a href="#" onclick="showPage('menyu',this)">Menyu</a>
+    <a href="#" onclick="showPage('statistika',this)">Statistika</a>
+  </nav>
+  <div style="font-size:12px;color:var(--muted)" id="clock"></div>
+</header>
+<div class="main">
+<div class="page active" id="page-stollar">
+  <div class="row between" style="margin-bottom:20px">
+    <div class="section-title" style="margin:0">Stollar boshqaruvi</div>
+    <div class="row" style="gap:12px">
+      <span class="badge green"><span class="dot green"></span> Bo'sh</span>
+      <span class="badge blue"><span class="dot blue"></span> Aktiv</span>
+      <span class="badge red"><span class="dot red"></span> Band</span>
+      <span class="badge amber"><span class="dot amber"></span> Tayyor</span>
+    </div>
+  </div>
+  <div class="grid4" id="stol-grid"></div>
+  <div class="sep"></div>
+  <div class="section-title">Buyurtmalar</div>
+  <div id="admin-orders"></div>
+</div>
+<div class="page" id="page-menyu">
+  <div class="grid2" style="align-items:start;gap:20px">
+    <div>
+      <div class="section-title">Taomlar ro'yxati</div>
+      <div id="menyu-list"></div>
+    </div>
+    <div class="card">
+      <div class="section-title" style="font-size:15px;margin-bottom:14px">Yangi taom qo'shish</div>
+      <div class="form-row"><label>Taom nomi</label><input id="f-nom" placeholder="Masalan: Osh"/></div>
+      <div class="form-row"><label>Narxi (so'm)</label><input id="f-narx" type="number" placeholder="35000"/></div>
+      <div class="form-row"><label>Kategoriya</label>
+        <select id="f-kat">
+          <option value="🍖 Asosiy taomlar">🍖 Asosiy taomlar</option>
+          <option value="🥗 Salatlar">🥗 Salatlar</option>
+          <option value="🍜 Sho'rvalar">🍜 Sho'rvalar</option>
+          <option value="🥤 Ichimliklar">🥤 Ichimliklar</option>
+          <option value="🍰 Shirinliklar">🍰 Shirinliklar</option>
+          <option value="🫕 Qo'shimchalar">🫕 Qo'shimchalar</option>
+        </select>
+      </div>
+      <div class="form-row"><label>Tavsif</label><input id="f-tavsif" placeholder="Qisqa tavsif..."/></div>
+      <div class="form-row"><label>Mavjudligi</label>
+        <select id="f-holat">
+          <option value="aktiv">✅ Mavjud</option>
+          <option value="yoq">❌ Mavjud emas</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Taom rasmi</label>
+        <div class="img-upload" id="img-upload-area" onclick="document.getElementById('f-rasm').click()">
+          <span style="font-size:28px">📷</span>
+          <span>Rasm tanlash uchun bosing</span>
+          <span style="font-size:11px;color:var(--muted)">JPG, PNG — max 3MB</span>
+        </div>
+        <img id="img-preview" class="img-preview"/>
+        <input type="file" id="f-rasm" accept="image/*" style="display:none" onchange="previewImg(this)"/>
+        <div id="img-name" style="font-size:11px;color:var(--muted);margin-top:4px;text-align:center"></div>
+      </div>
+      <button class="btn primary" style="width:100%" onclick="taomQosh()">+ Saqlash</button>
+      <div id="menyu-msg" style="margin-top:8px;font-size:12px;text-align:center"></div>
+    </div>
+  </div>
+</div>
+<div class="page" id="page-statistika">
+  <div class="section-title">Bugungi natijalar</div>
+  <div class="grid3" style="margin-bottom:20px">
+    <div class="stat-card"><div class="stat-val" id="s-jami">0</div><div class="stat-lbl">Jami buyurtma</div></div>
+    <div class="stat-card"><div class="stat-val" id="s-daromad">0</div><div class="stat-lbl">Daromad (so'm)</div></div>
+    <div class="stat-card"><div class="stat-val" id="s-tayyor">0</div><div class="stat-lbl">Bajarilgan</div></div>
+  </div>
+  <div class="card">
+    <div class="section-title" style="font-size:15px;margin-bottom:12px">Barcha buyurtmalar tarixi</div>
+    <div id="stat-list"></div>
+  </div>
+</div>
+</div>
+<script>
+function getDB(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch{return d}}
+function setDB(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function initData(){
+  if(!localStorage.getItem('r_menyu')){setDB('r_menyu',[{id:1,nom:"Osh",narx:35000,kat:"🍖 Asosiy taomlar",tavsif:"An'anaviy o'zbek oshi",holat:"aktiv",rasm:""},{id:2,nom:"Lag'mon",narx:28000,kat:"🍖 Asosiy taomlar",tavsif:"Qo'lda yasalgan",holat:"aktiv",rasm:""},{id:3,nom:"Shurva",narx:22000,kat:"🍜 Sho'rvalar",tavsif:"Go'sht va sabzavotli",holat:"aktiv",rasm:""},{id:4,nom:"Salat Toshkent",narx:18000,kat:"🥗 Salatlar",tavsif:"Mol tili bilan",holat:"aktiv",rasm:""},{id:5,nom:"Samsa",narx:8000,kat:"🫕 Qo'shimchalar",tavsif:"Tandirda pishirilgan",holat:"aktiv",rasm:""},{id:6,nom:"Ko'k choy",narx:5000,kat:"🥤 Ichimliklar",tavsif:"",holat:"aktiv",rasm:""},{id:7,nom:"Qora choy",narx:5000,kat:"🥤 Ichimliklar",tavsif:"",holat:"aktiv",rasm:""},{id:8,nom:"Kompot",narx:8000,kat:"🥤 Ichimliklar",tavsif:"",holat:"aktiv",rasm:""}]);}
+  if(!localStorage.getItem('r_stollar')){setDB('r_stollar',Array.from({length:13},(_,i)=>({id:i+1,holat:"bosh",buyurtmaId:null})));}
+  if(!localStorage.getItem('r_buyurtmalar'))setDB('r_buyurtmalar',[]);
+}
+function showPage(name,el){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'));document.getElementById('page-'+name).classList.add('active');if(el)el.classList.add('active');render();}
+function render(){renderStollar();renderMenyu();renderOrders();renderStat();}
+function renderStollar(){let stollar=getDB('r_stollar',[]);let buyurtmalar=getDB('r_buyurtmalar',[]);let g=document.getElementById('stol-grid');if(!g)return;g.innerHTML=stollar.map(s=>{let b=buyurtmalar.find(x=>x.id===s.buyurtmaId);let icon=s.holat==='bosh'?'○':s.holat==='aktiv'?'●':s.holat==='band'?'◉':'✓';let holat=s.holat==='bosh'?'Bo\'sh':s.holat==='aktiv'?'Aktiv':s.holat==='band'?'Band':'Tayyor';return`<div class="stol-btn ${s.holat}" onclick="stolClick(${s.id})"><div style="font-size:24px;color:${s.holat==='bosh'?'var(--muted)':s.holat==='aktiv'?'var(--blue)':s.holat==='band'?'var(--red)':'var(--green)'}">${icon}</div><div class="stol-num">${s.id}</div><div class="stol-holat" style="color:${s.holat==='bosh'?'var(--muted)':s.holat==='aktiv'?'var(--blue)':s.holat==='band'?'var(--red)':'var(--green)'}">${holat}</div>${b?`<div style="font-size:10px;color:var(--muted)">${b.items.length} ta taom</div>`:''}</div>`;}).join('');}
+function stolClick(id){let stollar=getDB('r_stollar',[]);let s=stollar.find(x=>x.id===id);if(!s)return;let map={bosh:'aktiv',aktiv:'band',band:'bosh',tayyor:'bosh'};s.holat=map[s.holat]||'bosh';setDB('r_stollar',stollar);renderStollar();}
+function renderMenyu(){let menyu=getDB('r_menyu',[]);let el=document.getElementById('menyu-list');if(!el)return;let cats=[...new Set(menyu.map(m=>m.kat))];el.innerHTML=cats.map(cat=>`<div style="margin-bottom:16px"><div style="font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">${cat}</div>${menyu.filter(m=>m.kat===cat).map(m=>`<div class="menyu-item">${m.rasm?`<img src="${m.rasm}" class="menyu-img"/>`:`<div class="menyu-img-placeholder">🍽️</div>`}<div style="flex:1"><div class="row" style="gap:6px;margin-bottom:3px"><span style="font-weight:600;font-size:14px">${m.nom}</span><span class="tag">#${m.id}</span>${m.holat==='yoq'?'<span class="badge red">Mavjud emas</span>':''}</div>${m.tavsif?`<div style="font-size:12px;color:var(--muted)">${m.tavsif}</div>`:''}</div><div class="row" style="gap:8px"><span style="font-weight:700;color:var(--accent)">${m.narx.toLocaleString()}</span><button class="btn sm ${m.holat==='aktiv'?'danger':''}" onclick="toggleTaom(${m.id})">${m.holat==='aktiv'?'Yopish':'Ochish'}</button><button class="btn sm danger" onclick="taomOchir(${m.id})">✕</button></div></div>`).join('')}</div>`).join('');}
+function toggleTaom(id){let menyu=getDB('r_menyu',[]);let m=menyu.find(x=>x.id===id);if(m)m.holat=m.holat==='aktiv'?'yoq':'aktiv';setDB('r_menyu',menyu);renderMenyu();}
+function taomOchir(id){if(!confirm('Taomni o\'chirasizmi?'))return;setDB('r_menyu',getDB('r_menyu',[]).filter(m=>m.id!==id));renderMenyu();}
+function previewImg(input){let file=input.files[0];if(!file)return;if(file.size>3*1024*1024){alert('Rasm 3MB dan kichik bo\'lsin!');return;}let reader=new FileReader();reader.onload=e=>{let prev=document.getElementById('img-preview');prev.src=e.target.result;prev.style.display='block';document.getElementById('img-upload-area').style.display='none';document.getElementById('img-name').textContent=file.name;};reader.readAsDataURL(file);}
+function taomQosh(){let nom=document.getElementById('f-nom').value.trim();let narx=parseInt(document.getElementById('f-narx').value)||0;let kat=document.getElementById('f-kat').value;let tavsif=document.getElementById('f-tavsif').value.trim();let holat=document.getElementById('f-holat').value;if(!nom||narx<1){document.getElementById('menyu-msg').textContent='Nom va narxni to\'ldiring!';document.getElementById('menyu-msg').style.color='var(--red)';return;}let prev=document.getElementById('img-preview');let rasm=prev.style.display==='block'?prev.src:'';let menyu=getDB('r_menyu',[]);menyu.push({id:Date.now()%100000,nom,narx,kat,tavsif,holat,rasm});setDB('r_menyu',menyu);document.getElementById('f-nom').value='';document.getElementById('f-narx').value='';document.getElementById('f-tavsif').value='';document.getElementById('f-rasm').value='';prev.style.display='none';prev.src='';document.getElementById('img-upload-area').style.display='flex';document.getElementById('img-name').textContent='';document.getElementById('menyu-msg').style.color='var(--green)';document.getElementById('menyu-msg').textContent=`"${nom}" qo'shildi!`;setTimeout(()=>document.getElementById('menyu-msg').textContent='',3000);renderMenyu();}
+function renderOrders(){let buyurtmalar=getDB('r_buyurtmalar',[]);let el=document.getElementById('admin-orders');if(!el)return;if(!buyurtmalar.length){el.innerHTML='<div class="empty">Hozircha buyurtma yo\'q</div>';return;}el.innerHTML=buyurtmalar.slice().reverse().map(b=>`<div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;border-left:3px solid ${b.holat==='yangi'?'var(--red)':b.holat==='tayyorlanmoqda'?'var(--accent)':b.holat==='tayyor'?'var(--green)':'var(--muted)'}"><div class="row between" style="margin-bottom:6px"><div class="row" style="gap:8px"><span style="font-weight:700">${b.id}</span><span class="badge blue">Stol ${b.stol}</span><span class="badge ${b.holat==='yangi'?'red':b.holat==='tayyorlanmoqda'?'amber':b.holat==='tayyor'?'green':''}">${b.holat==='yangi'?'Yangi':b.holat==='tayyorlanmoqda'?'Tayyorlanmoqda':b.holat==='tayyor'?'Tayyor':'Yetkazildi'}</span></div><span style="font-size:12px;color:var(--muted)">${b.vaqt}</span></div><div style="font-size:12px;color:var(--muted)">${b.items.map(i=>`${i.nom} x${i.qty}`).join(' • ')}</div><div style="font-weight:700;color:var(--accent);margin-top:6px">${b.jami.toLocaleString()} so'm</div></div>`).join('');}
+function renderStat(){let b=getDB('r_buyurtmalar',[]);let s1=document.getElementById('s-jami'),s2=document.getElementById('s-daromad'),s3=document.getElementById('s-tayyor'),sl=document.getElementById('stat-list');if(s1)s1.textContent=b.length;if(s2)s2.textContent=b.reduce((a,x)=>a+x.jami,0).toLocaleString();if(s3)s3.textContent=b.filter(x=>x.holat==='yetkazildi'||x.holat==='tayyor').length;if(sl)sl.innerHTML=b.length?b.slice().reverse().map(x=>`<div class="row between" style="padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><div class="row" style="gap:8px"><span style="font-weight:600">${x.id}</span><span class="badge blue">Stol ${x.stol}</span><span style="color:var(--muted)">${x.items.map(i=>i.nom).join(', ')}</span></div><div class="row" style="gap:8px"><span style="color:var(--accent);font-weight:600">${x.jami.toLocaleString()} so'm</span><span style="color:var(--muted);font-size:11px">${x.vaqt}</span></div></div>`).join(''):'<div class="empty">Ma\'lumot yo\'q</div>';}
+function clock(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('uz',{hour:'2-digit',minute:'2-digit',second:'2-digit'});}
+initData();render();setInterval(render,5000);setInterval(clock,1000);clock();
+</script>
+</body>
+</html>
