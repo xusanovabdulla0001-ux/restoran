@@ -1,0 +1,6 @@
+services:
+  - type: worker
+    name: toto-cake-bot
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bott3.py
