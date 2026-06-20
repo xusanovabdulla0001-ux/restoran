@@ -2,130 +2,234 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oshxona Ekrani</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Menyu</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0a0a0a;--surface:#141414;--card:#1c1c1c;--border:#2a2a2a;--text:#f0f0f0;--muted:#888;--accent:#f5c842;--green:#4caf72;--red:#e05252;--blue:#5b9cf6;--orange:#f0883e}
-body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
-header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.logo{font-size:17px;font-weight:700;color:var(--accent)}
-.counter-badge{background:var(--red);color:#fff;padding:4px 14px;border-radius:20px;font-size:14px;font-weight:700}
-.ping{animation:ping .6s ease-in-out infinite alternate}
-@keyframes ping{from{transform:scale(1)}to{transform:scale(1.08)}}
-.main{padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;align-items:start}
-.order-card{border-radius:14px;border:2px solid var(--border);overflow:hidden;transition:all .2s}
-.order-card.yangi{border-color:var(--red);animation:flash 1s ease-in-out 3}
-@keyframes flash{0%,100%{box-shadow:none}50%{box-shadow:0 0 20px rgba(224,82,82,.4)}}
-.order-card.tayyorlanmoqda{border-color:var(--orange)}
-.order-card.tayyor{border-color:var(--green);opacity:.6}
-.card-header{padding:14px 16px;display:flex;align-items:center;justify-content:space-between}
-.card-header.yangi{background:#2e0e0e}
-.card-header.tayyorlanmoqda{background:#2e1c00}
-.card-header.tayyor{background:#0b2e18}
-.order-id{font-size:18px;font-weight:800}
-.order-meta{font-size:12px;color:var(--muted);margin-top:2px}
-.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}
-.badge.red{background:rgba(224,82,82,.15);color:var(--red);border:1px solid rgba(224,82,82,.3)}
-.badge.orange{background:rgba(240,136,62,.15);color:var(--orange);border:1px solid rgba(240,136,62,.3)}
-.badge.green{background:rgba(76,175,114,.15);color:var(--green);border:1px solid rgba(76,175,114,.3)}
-.items-list{padding:12px 16px;background:var(--card)}
-.item-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)}
-.item-row:last-child{border-bottom:none}
-.item-nom{font-size:15px;font-weight:600}
-.item-qty{font-size:20px;font-weight:800;color:var(--accent);min-width:36px;text-align:right}
-.card-footer{padding:12px 16px;background:var(--surface);display:flex;gap:8px}
-.action-btn{flex:1;padding:10px;border-radius:10px;border:none;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s}
-.action-btn:active{transform:scale(.97)}
-.btn-boshlash{background:var(--orange);color:#000}
-.btn-tayyor{background:var(--green);color:#000}
-.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:12px;grid-column:1/-1}
-.empty-icon{font-size:60px}
-.empty-txt{font-size:18px;color:var(--muted)}
-.pulse{width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block;margin-right:6px;animation:pulse 1.5s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#0a0a0a;--surface:#141414;--card:#1c1c1c;--border:#2a2a2a;--text:#f0f0f0;--muted:#888;--accent:#f5c842;--accent2:#e8a020;--green:#4caf72;--red:#e05252;--blue:#5b9cf6}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-size:15px;font-weight:700;color:var(--accent)}
+.stol-tag{background:#1e2000;color:var(--accent);padding:6px 16px;border-radius:20px;font-size:15px;font-weight:800;border:1px solid #3a3a00;letter-spacing:1px}
+.stol-banner{background:linear-gradient(135deg,#1e2000,#2a2a00);border-bottom:1px solid #3a3a00;padding:16px 20px;display:flex;align-items:center;justify-content:center;gap:16px}
+.stol-num-big{font-size:48px;font-weight:900;color:var(--accent);line-height:1}
+.stol-info{text-align:left}
+.stol-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px}
+.stol-name{font-size:22px;font-weight:800;color:var(--text)}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:12px 16px 8px;scrollbar-width:none;position:sticky;top:57px;z-index:90;background:var(--bg)}
+.cats::-webkit-scrollbar{display:none}
+.cat-btn{padding:7px 16px;border-radius:20px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:13px;cursor:pointer;white-space:nowrap;transition:all .15s;font-family:inherit}
+.cat-btn.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:600}
+.menu-body{flex:1;overflow-y:auto;padding:0 16px 120px}
+.cat-section{margin-bottom:24px}
+.cat-title{font-size:13px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;padding:12px 0 8px;border-bottom:1px solid var(--border);margin-bottom:10px}
+.taom-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:10px;transition:border .15s}
+.taom-card:active{border-color:var(--accent)}
+.taom-img{width:100%;height:140px;object-fit:cover;display:block}
+.taom-img-placeholder{width:100%;height:80px;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:36px}
+.taom-body{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.taom-nom{font-size:15px;font-weight:600;margin-bottom:2px}
+.taom-tavsif{font-size:12px;color:var(--muted);margin-bottom:6px}
+.taom-narx{font-size:16px;font-weight:700;color:var(--accent)}
+.counter-row{display:flex;align-items:center;gap:8px}
+.cnt-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;line-height:1;transition:all .15s}
+.cnt-btn:active{background:var(--accent);color:#000;border-color:var(--accent)}
+.cnt-val{font-size:16px;font-weight:700;min-width:24px;text-align:center}
+.footer{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);padding:12px 16px}
+.sepet-bar{background:var(--accent);color:#000;border-radius:12px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-weight:700;font-size:15px;border:none;width:100%;font-family:inherit}
+.sepet-bar.hidden{display:none}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;display:flex;flex-direction:column;justify-content:flex-end}
+.modal.hidden{display:none}
+.modal-content{background:var(--surface);border-radius:20px 20px 0 0;padding:20px;max-height:80vh;overflow-y:auto}
+.modal-title{font-size:17px;font-weight:700;margin-bottom:4px;text-align:center}
+.modal-stol{font-size:13px;color:var(--muted);text-align:center;margin-bottom:16px}
+.sepet-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
+.jami-row{display:flex;justify-content:space-between;padding:14px 0;font-size:16px;font-weight:700}
+.confirm-btn{background:var(--accent);color:#000;border:none;border-radius:12px;padding:14px;width:100%;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px}
+.cancel-btn{background:transparent;color:var(--muted);border:none;border-radius:12px;padding:10px;width:100%;font-size:14px;cursor:pointer;font-family:inherit;margin-top:4px}
+.success-screen{display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;min-height:100vh;background:var(--bg)}
+.success-icon{font-size:64px;margin-bottom:16px}
+.success-title{font-size:22px;font-weight:700;margin-bottom:8px}
+.success-stol{font-size:36px;font-weight:900;color:var(--accent);margin-bottom:8px}
+.success-sub{font-size:14px;color:var(--muted);margin-bottom:32px;line-height:1.6}
+.new-btn{background:var(--accent);color:#000;border:none;border-radius:12px;padding:14px 32px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+.status-card{border-radius:12px;padding:14px;margin:0 16px 8px;font-size:13px;text-align:center;color:var(--muted);display:none;border:1px solid var(--border);background:var(--card)}
 </style>
 </head>
 <body>
+<div id="main-screen">
 <header>
-  <div>
-    <div class="logo">👨‍🍳 OSHXONA</div>
-    <div style="font-size:11px;color:var(--muted);margin-top:2px"><span class="pulse"></span>Real vaqtda yangilanadi</div>
-  </div>
-  <div>
-    <div class="counter-badge" id="yangi-count">0 yangi</div>
-    <div style="font-size:11px;color:var(--muted);text-align:right;margin-top:4px" id="clock"></div>
-  </div>
+  <div class="logo">⬛ RESTORAN</div>
+  <div class="stol-tag" id="stol-tag">Stol —</div>
 </header>
-<div class="main" id="main"></div>
+<div class="stol-banner">
+  <div class="stol-num-big" id="stol-num-big">—</div>
+  <div class="stol-info">
+    <div class="stol-label">Siz</div>
+    <div class="stol-name" id="stol-name">—-stol</div>
+  </div>
+</div>
+<div id="status-card" class="status-card"></div>
+<div class="cats" id="cats"></div>
+<div class="menu-body" id="menu-body"></div>
+<div class="footer">
+  <button class="sepet-bar hidden" id="sepet-bar" onclick="openModal()">
+    <span id="sepet-count">0 ta</span>
+    <span>Buyurtma berish →</span>
+    <span id="sepet-sum">0 so'm</span>
+  </button>
+</div>
+</div>
+
+<div class="modal hidden" id="modal">
+  <div class="modal-content">
+    <div class="modal-title">Buyurtmangizni tasdiqlang</div>
+    <div class="modal-stol" id="modal-stol"></div>
+    <div id="modal-items"></div>
+    <div class="jami-row"><span>Jami:</span><span id="modal-jami" style="color:var(--accent)"></span></div>
+    <button class="confirm-btn" onclick="buyurtmaYuborish()">✅ Tasdiqlash</button>
+    <button class="cancel-btn" onclick="closeModal()">Orqaga</button>
+  </div>
+</div>
+
+<div class="success-screen" id="success-screen">
+  <div class="success-icon">✅</div>
+  <div class="success-title">Buyurtma qabul qilindi!</div>
+  <div class="success-stol" id="success-stol"></div>
+  <div class="success-sub">Oshxona tayyorlayapti.<br>Ofitsiant ko'p o'tmay olib keladi.</div>
+  <button class="new-btn" onclick="yangiOrder()">+ Yana buyurtma berish</button>
+</div>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 <script>
 const firebaseConfig={apiKey:"AIzaSyB2LY4S_Eh1vAMKJ74q0K2yas9BPUv2hLo",authDomain:"shaffof-menyu.firebaseapp.com",databaseURL:"https://shaffof-menyu-default-rtdb.firebaseio.com",projectId:"shaffof-menyu",storageBucket:"shaffof-menyu.firebasestorage.app",messagingSenderId:"429591005236",appId:"1:429591005236:web:1a4f0d94facce07665a261"};
 firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth();
 const db=firebase.database();
 
-let rid=new URLSearchParams(location.search).get('rid');
-let prevIds=new Set();
+let p=new URLSearchParams(location.search);
+let rid=p.get('rid');
+let stolId=parseInt(p.get('stol'))||1;
+let sepet={},menyu=[];
 
-auth.onAuthStateChanged(user=>{
-  if(!user){location.href='login.html';return;}
-  if(!rid){
-    db.ref('foydalanuvchilar/'+user.uid).once('value',snap=>{
-      let d=snap.val();
-      if(d){rid=d.rid;initData();}
-      else location.href='login.html';
+function init(){
+  document.getElementById('stol-tag').textContent='Stol '+stolId;
+  document.getElementById('stol-num-big').textContent=stolId;
+  document.getElementById('stol-name').textContent=stolId+'-stol';
+  document.getElementById('success-stol').textContent='Stol '+stolId;
+  document.getElementById('modal-stol').textContent='📍 Stol '+stolId;
+  document.title='Stol '+stolId+' — Menyu';
+
+  if(rid){
+    db.ref('restoranlar/'+rid+'/nom').once('value',snap=>{
+      if(snap.val()) document.querySelector('.logo').textContent='⬛ '+snap.val();
     });
-  } else initData();
-});
-
-function initData(){
-  db.ref('restoranlar/'+rid+'/buyurtmalar').on('value',snap=>{
-    let val=snap.val();
-    let buyurtmalar=val?Object.values(val).filter(b=>b.holat!=='yetkazildi'):[];
-    let yangi=buyurtmalar.filter(b=>b.holat==='yangi');
-    document.getElementById('yangi-count').textContent=yangi.length+' yangi';
-    document.getElementById('yangi-count').className='counter-badge'+(yangi.length>0?' ping':'');
-    let currentIds=new Set(buyurtmalar.map(b=>b.id));
-    let hasNew=[...currentIds].some(id=>!prevIds.has(id));
-    if(hasNew&&prevIds.size>0)playSound();
-    prevIds=currentIds;
-    let el=document.getElementById('main');
-    if(!buyurtmalar.length){
-      el.innerHTML='<div class="empty"><div class="empty-icon">✓</div><div class="empty-txt">Barcha buyurtmalar bajarildi</div></div>';
-      return;
-    }
-    let sorted=[...buyurtmalar.filter(b=>b.holat==='yangi'),...buyurtmalar.filter(b=>b.holat==='tayyorlanmoqda'),...buyurtmalar.filter(b=>b.holat==='tayyor')];
-    el.innerHTML=sorted.map(b=>`
-      <div class="order-card ${b.holat}">
-        <div class="card-header ${b.holat}">
-          <div><div class="order-id">${b.id}</div><div class="order-meta">Stol ${b.stol} · ${b.vaqt}</div></div>
-          <span class="badge ${b.holat==='yangi'?'red':b.holat==='tayyorlanmoqda'?'orange':'green'}">${b.holat==='yangi'?'🔴 Yangi':b.holat==='tayyorlanmoqda'?'🟠 Tayyorlanmoqda':'✅ Tayyor'}</span>
-        </div>
-        <div class="items-list">${b.items.map(i=>`<div class="item-row"><span class="item-nom">${i.nom}</span><span class="item-qty">×${i.qty}</span></div>`).join('')}</div>
-        <div class="card-footer">
-          ${b.holat==='yangi'?`<button class="action-btn btn-boshlash" onclick="boshla('${b.id}')">🍳 Tayyorlashni boshlash</button>`:''}
-          ${b.holat==='tayyorlanmoqda'?`<button class="action-btn btn-tayyor" onclick="tayyor('${b.id}')">✅ Tayyor!</button>`:''}
-          ${b.holat==='tayyor'?'<div style="flex:1;text-align:center;color:var(--green);font-weight:700">✓ Ofitsiant kutmoqda</div>':''}
-        </div>
-      </div>`).join('');
-  });
+    db.ref('restoranlar/'+rid+'/menyu').on('value',snap=>{
+      let val=snap.val();
+      if(val){menyu=Object.values(val).filter(m=>m.holat==='aktiv');renderMenu();}
+    });
+    db.ref('restoranlar/'+rid+'/buyurtmalar').on('value',snap=>{
+      let val=snap.val();
+      if(val){
+        let list=Object.values(val).filter(b=>b.stol===stolId);
+        let last=list[list.length-1];
+        let sc=document.getElementById('status-card');
+        if(last&&last.holat!=='yetkazildi'){
+          let icon=last.holat==='yangi'?'⏳':last.holat==='tayyorlanmoqda'?'🍳':'🛎️';
+          let txt=last.holat==='yangi'?'Buyurtmangiz qabul qilindi...':last.holat==='tayyorlanmoqda'?'Oshxona tayyorlayapti...':'Tayyor! Ofitsiant olib keladi...';
+          sc.style.display='block';
+          sc.style.background=last.holat==='tayyor'?'#0b1f14':'var(--card)';
+          sc.innerHTML=`${icon} <b style="color:var(--text)">${last.id}</b> — ${txt}`;
+        } else sc.style.display='none';
+      }
+    });
+  } else {
+    document.getElementById('menu-body').innerHTML='<div style="text-align:center;padding:60px 20px;color:var(--muted)">❌ Restoran topilmadi.<br>QR kodni qayta skanerlang.</div>';
+  }
 }
 
-function boshla(id){db.ref('restoranlar/'+rid+'/buyurtmalar/'+id).update({holat:'tayyorlanmoqda'});}
-function tayyor(id){
-  db.ref('restoranlar/'+rid+'/buyurtmalar/'+id).update({holat:'tayyor'});
-  db.ref('restoranlar/'+rid+'/buyurtmalar/'+id).once('value',snap=>{
-    let b=snap.val();
-    if(b) db.ref('restoranlar/'+rid+'/stollar/'+b.stol).update({holat:'tayyor'});
-  });
+function renderMenu(){
+  let cats=[...new Set(menyu.map(m=>m.kat))];
+  let catEl=document.getElementById('cats');
+  let prev=catEl.querySelector('.cat-btn.active')?.dataset?.cat||cats[0];
+  catEl.innerHTML=cats.map(c=>`<button class="cat-btn${c===prev?' active':''}" data-cat="${c}" onclick="scrollCat('${c}',this)">${c}</button>`).join('');
+  document.getElementById('menu-body').innerHTML=cats.map(cat=>`
+    <div class="cat-section" id="sec-${CSS.escape(cat)}">
+      <div class="cat-title">${cat}</div>
+      ${menyu.filter(m=>m.kat===cat).map(m=>`
+        <div class="taom-card">
+          ${m.rasm?`<img src="${m.rasm}" class="taom-img"/>`:`<div class="taom-img-placeholder">🍽️</div>`}
+          <div class="taom-body">
+            <div style="flex:1">
+              <div class="taom-nom">${m.nom}</div>
+              ${m.tavsif?`<div class="taom-tavsif">${m.tavsif}</div>`:''}
+              <div class="taom-narx">${m.narx.toLocaleString()} so'm</div>
+            </div>
+            <div class="counter-row">
+              <button class="cnt-btn" onclick="dec(${m.id})">−</button>
+              <div class="cnt-val" id="cnt-${m.id}">${sepet[m.id]||0}</div>
+              <button class="cnt-btn" onclick="inc(${m.id})">+</button>
+            </div>
+          </div>
+        </div>`).join('')}
+    </div>`).join('');
+  updateBar();
 }
-function playSound(){try{let ctx=new AudioContext();[440,550,660].forEach((f,i)=>{let o=ctx.createOscillator();let g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=f;g.gain.setValueAtTime(.3,ctx.currentTime+i*.15);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+i*.15+.2);o.start(ctx.currentTime+i*.15);o.stop(ctx.currentTime+i*.15+.2);});}catch(e){}}
-function clock(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('uz',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
-setInterval(clock,1000);clock();
+
+function scrollCat(cat,btn){
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  let sec=document.getElementById('sec-'+CSS.escape(cat));
+  if(sec)sec.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function inc(id){sepet[id]=(sepet[id]||0)+1;let el=document.getElementById('cnt-'+id);if(el)el.textContent=sepet[id];updateBar();}
+function dec(id){if(!sepet[id])return;sepet[id]--;if(!sepet[id])delete sepet[id];let el=document.getElementById('cnt-'+id);if(el)el.textContent=sepet[id]||0;updateBar();}
+
+function updateBar(){
+  let items=Object.entries(sepet).map(([id,qty])=>{let m=menyu.find(x=>x.id==id);return m?{...m,qty}:null;}).filter(Boolean);
+  let jami=items.reduce((a,x)=>a+x.narx*x.qty,0);
+  let count=items.reduce((a,x)=>a+x.qty,0);
+  let bar=document.getElementById('sepet-bar');
+  if(count>0){bar.classList.remove('hidden');document.getElementById('sepet-count').textContent=count+' ta';document.getElementById('sepet-sum').textContent=jami.toLocaleString()+' so\'m';}
+  else bar.classList.add('hidden');
+}
+
+function openModal(){
+  let items=Object.entries(sepet).map(([id,qty])=>{let m=menyu.find(x=>x.id==id);return m?{...m,qty}:null;}).filter(Boolean);
+  let jami=items.reduce((a,x)=>a+x.narx*x.qty,0);
+  document.getElementById('modal-items').innerHTML=items.map(i=>`
+    <div class="sepet-item">
+      <span>${i.nom} <span style="color:var(--muted)">×${i.qty}</span></span>
+      <span style="color:var(--accent);font-weight:600">${(i.narx*i.qty).toLocaleString()}</span>
+    </div>`).join('');
+  document.getElementById('modal-jami').textContent=jami.toLocaleString()+' so\'m';
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+function closeModal(){document.getElementById('modal').classList.add('hidden')}
+
+function buyurtmaYuborish(){
+  if(!rid)return;
+  let items=Object.entries(sepet).map(([id,qty])=>{let m=menyu.find(x=>x.id==id);return m?{nom:m.nom,narx:m.narx,qty}:null;}).filter(Boolean);
+  if(!items.length)return;
+  let jami=items.reduce((a,x)=>a+x.narx*x.qty,0);
+  let id='B'+Date.now();
+  let buyurtma={id,stol:stolId,items,jami,holat:'yangi',vaqt:new Date().toLocaleTimeString('uz',{hour:'2-digit',minute:'2-digit'})};
+  db.ref('restoranlar/'+rid+'/buyurtmalar/'+id).set(buyurtma);
+  db.ref('restoranlar/'+rid+'/stollar/'+stolId).update({holat:'aktiv',buyurtmaId:id});
+  sepet={};closeModal();
+  document.getElementById('main-screen').style.display='none';
+  document.getElementById('success-screen').style.display='flex';
+}
+
+function yangiOrder(){
+  document.getElementById('main-screen').style.display='block';
+  document.getElementById('success-screen').style.display='none';
+  renderMenu();
+}
+
+init();
 </script>
 </body>
 </html>
