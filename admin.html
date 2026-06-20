@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel — Restoran</title>
+<title>Admin Panel — Shaffof Menyu</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#0a0a0a;--surface:#141414;--card:#1c1c1c;--border:#2a2a2a;--text:#f0f0f0;--muted:#888;--accent:#f5c842;--accent2:#e8a020;--green:#4caf72;--red:#e05252;--blue:#5b9cf6;--orange:#f0883e}
@@ -15,7 +15,7 @@ header{background:var(--surface);border-bottom:1px solid var(--border);padding:0
 .nav a:hover,.nav a.active{background:var(--card);color:var(--text)}
 .main{max-width:1100px;margin:0 auto;padding:24px 16px}
 .page{display:none}.page.active{display:block}
-.section-title{font-size:18px;font-weight:600;margin-bottom:16px;color:var(--text)}
+.section-title{font-size:18px;font-weight:600;margin-bottom:16px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
@@ -35,7 +35,7 @@ header{background:var(--surface);border-bottom:1px solid var(--border);padding:0
 .btn:hover{border-color:var(--accent);color:var(--accent)}
 .btn.primary{background:var(--accent);color:#000;border-color:var(--accent);font-weight:600}
 .btn.danger{background:#2e0e0e;color:var(--red);border-color:#5a1a1a}.btn.sm{padding:5px 10px;font-size:12px}
-input,select,textarea{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--surface);color:var(--text);font-family:inherit;outline:none;transition:border .15s}
+input,select{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--surface);color:var(--text);font-family:inherit;outline:none;transition:border .15s}
 input:focus,select:focus{border-color:var(--accent)}
 label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
 .form-row{margin-bottom:12px}.row{display:flex;align-items:center;gap:8px}.row.between{justify-content:space-between}
@@ -43,35 +43,44 @@ label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
 .menyu-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .tag{background:#1e1e00;color:var(--accent);font-size:11px;padding:2px 8px;border-radius:4px}
 .empty{text-align:center;padding:40px;color:var(--muted);font-size:14px}
-select option{background:#1c1c1c}
-.img-upload{width:100%;height:110px;border:2px dashed var(--border);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;background:var(--surface);color:var(--muted);font-size:13px;gap:6px}
+.img-upload{width:100%;height:100px;border:2px dashed var(--border);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;background:var(--surface);color:var(--muted);font-size:13px;gap:6px}
 .img-upload:hover{border-color:var(--accent);color:var(--accent)}
-.img-preview{width:100%;height:110px;object-fit:cover;border-radius:10px;border:1px solid var(--border);display:none}
-.menyu-img{width:52px;height:52px;object-fit:cover;border-radius:8px;flex-shrink:0}
-.menyu-img-placeholder{width:52px;height:52px;border-radius:8px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.img-preview{width:100%;height:100px;object-fit:cover;border-radius:10px;border:1px solid var(--border);display:none}
+.menyu-img{width:48px;height:48px;object-fit:cover;border-radius:8px;flex-shrink:0}
+.menyu-img-placeholder{width:48px;height:48px;border-radius:8px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .sync{font-size:11px;color:var(--green);margin-left:8px}
+.back-btn{font-size:12px;color:var(--muted);text-decoration:none;padding:5px 10px;border:1px solid var(--border);border-radius:6px}
+.back-btn:hover{color:var(--accent);border-color:var(--accent)}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">⬛ RESTORAN ADMIN</div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <div class="logo">⬛ ADMIN</div>
+    <span class="sync" id="sync-status">● Ulanmoqda...</span>
+  </div>
   <nav class="nav">
     <a href="#" class="active" onclick="showPage('stollar',this)">Stollar</a>
     <a href="#" onclick="showPage('menyu',this)">Menyu</a>
     <a href="#" onclick="showPage('statistika',this)">Statistika</a>
   </nav>
-  <div style="font-size:12px;color:var(--muted)" id="clock"></div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <div style="font-size:12px;color:var(--muted)" id="clock"></div>
+    <a href="dashboard.html" class="back-btn">← Dashboard</a>
+  </div>
 </header>
+
 <div class="main">
 <div class="page active" id="page-stollar">
   <div class="row between" style="margin-bottom:20px">
-    <div class="section-title" style="margin:0">Stollar <span class="sync" id="sync-status">● Ulanmoqda...</span></div>
+    <div class="section-title" style="margin:0" id="restoran-nom-title">Stollar</div>
   </div>
   <div class="grid4" id="stol-grid"></div>
   <div class="sep"></div>
   <div class="section-title">Buyurtmalar</div>
   <div id="admin-orders"></div>
 </div>
+
 <div class="page" id="page-menyu">
   <div class="grid2" style="align-items:start;gap:20px">
     <div><div class="section-title">Taomlar ro'yxati</div><div id="menyu-list"></div></div>
@@ -96,7 +105,7 @@ select option{background:#1c1c1c}
       <div class="form-row">
         <label>Taom rasmi</label>
         <div class="img-upload" id="img-upload-area" onclick="document.getElementById('f-rasm').click()">
-          <span style="font-size:28px">📷</span><span>Rasm tanlash</span>
+          <span style="font-size:24px">📷</span><span>Rasm tanlash</span>
         </div>
         <img id="img-preview" class="img-preview"/>
         <input type="file" id="f-rasm" accept="image/*" style="display:none" onchange="previewImg(this)"/>
@@ -106,6 +115,7 @@ select option{background:#1c1c1c}
     </div>
   </div>
 </div>
+
 <div class="page" id="page-statistika">
   <div class="section-title">Bugungi natijalar</div>
   <div class="grid3" style="margin-bottom:20px">
@@ -116,30 +126,173 @@ select option{background:#1c1c1c}
   <div class="card"><div class="section-title" style="font-size:15px;margin-bottom:12px">Barcha buyurtmalar</div><div id="stat-list"></div></div>
 </div>
 </div>
+
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 <script>
-const firebaseConfig={databaseURL:"https://shaffof-menyu-default-rtdb.firebaseio.com"};
+const firebaseConfig={apiKey:"AIzaSyB2LY4S_Eh1vAMKJ74q0K2yas9BPUv2hLo",authDomain:"shaffof-menyu.firebaseapp.com",databaseURL:"https://shaffof-menyu-default-rtdb.firebaseio.com",projectId:"shaffof-menyu",storageBucket:"shaffof-menyu.firebasestorage.app",messagingSenderId:"429591005236",appId:"1:429591005236:web:1a4f0d94facce07665a261"};
 firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth();
 const db=firebase.database();
+
+let rid=new URLSearchParams(location.search).get('rid');
 let menyu=[],stollar=[],buyurtmalar=[];
+
+auth.onAuthStateChanged(user=>{
+  if(!user){location.href='login.html';return;}
+  if(!rid){
+    db.ref('foydalanuvchilar/'+user.uid).once('value',snap=>{
+      let d=snap.val();
+      if(d){rid=d.rid;initData();}
+      else location.href='login.html';
+    });
+  } else initData();
+});
+
 function initData(){
-  db.ref('menyu').on('value',snap=>{let val=snap.val();if(!val){let def=[{id:1,nom:"Osh",narx:35000,kat:"🍖 Asosiy taomlar",tavsif:"An'anaviy o'zbek oshi",holat:"aktiv",rasm:""},{id:2,nom:"Lag'mon",narx:28000,kat:"🍖 Asosiy taomlar",tavsif:"Qo'lda yasalgan",holat:"aktiv",rasm:""},{id:3,nom:"Shurva",narx:22000,kat:"🍜 Sho'rvalar",tavsif:"Go'sht va sabzavotli",holat:"aktiv",rasm:""},{id:4,nom:"Salat Toshkent",narx:18000,kat:"🥗 Salatlar",tavsif:"Mol tili bilan",holat:"aktiv",rasm:""},{id:5,nom:"Samsa",narx:8000,kat:"🫕 Qo'shimchalar",tavsif:"Tandirda pishirilgan",holat:"aktiv",rasm:""},{id:6,nom:"Ko'k choy",narx:5000,kat:"🥤 Ichimliklar",tavsif:"",holat:"aktiv",rasm:""},{id:7,nom:"Qora choy",narx:5000,kat:"🥤 Ichimliklar",tavsif:"",holat:"aktiv",rasm:""},{id:8,nom:"Kompot",narx:8000,kat:"🥤 Ichimliklar",tavsif:"",holat:"aktiv",rasm:""}];def.forEach(m=>db.ref('menyu/'+m.id).set(m));}else{menyu=Object.values(val);renderMenyu();}document.getElementById('sync-status').textContent='● Ulangan';document.getElementById('sync-status').style.color='var(--green)';});
-  db.ref('stollar').on('value',snap=>{let val=snap.val();if(!val){let s=Array.from({length:13},(_,i)=>({id:i+1,holat:"bosh",buyurtmaId:""}));s.forEach(x=>db.ref('stollar/'+x.id).set(x));}else{stollar=Object.values(val);renderStollar();}});
-  db.ref('buyurtmalar').on('value',snap=>{let val=snap.val();buyurtmalar=val?Object.values(val):[];renderOrders();renderStat();});
+  db.ref('restoranlar/'+rid+'/nom').once('value',snap=>{
+    document.getElementById('restoran-nom-title').textContent=(snap.val()||'Restoran')+' — Stollar';
+  });
+  db.ref('restoranlar/'+rid+'/menyu').on('value',snap=>{
+    let val=snap.val();
+    menyu=val?Object.values(val):[];
+    renderMenyu();
+    document.getElementById('sync-status').textContent='● Ulangan';
+    document.getElementById('sync-status').style.color='var(--green)';
+  });
+  db.ref('restoranlar/'+rid+'/stollar').on('value',snap=>{
+    let val=snap.val();
+    stollar=val?Object.values(val):[];
+    renderStollar();
+  });
+  db.ref('restoranlar/'+rid+'/buyurtmalar').on('value',snap=>{
+    let val=snap.val();
+    buyurtmalar=val?Object.values(val):[];
+    renderOrders();renderStat();
+  });
 }
-function showPage(name,el){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'));document.getElementById('page-'+name).classList.add('active');if(el)el.classList.add('active');}
-function renderStollar(){let g=document.getElementById('stol-grid');if(!g)return;g.innerHTML=stollar.map(s=>{let icon=s.holat==='bosh'?'○':s.holat==='aktiv'?'●':s.holat==='band'?'◉':'✓';let holat=s.holat==='bosh'?'Bo\'sh':s.holat==='aktiv'?'Aktiv':s.holat==='band'?'Band':'Tayyor';let color=s.holat==='bosh'?'var(--muted)':s.holat==='aktiv'?'var(--blue)':s.holat==='band'?'var(--red)':'var(--green)';return`<div class="stol-btn ${s.holat}" onclick="stolClick(${s.id})"><div style="font-size:24px;color:${color}">${icon}</div><div class="stol-num">${s.id}</div><div class="stol-holat" style="color:${color}">${holat}</div></div>`;}).join('');}
-function stolClick(id){let s=stollar.find(x=>x.id===id);if(!s)return;let map={bosh:'aktiv',aktiv:'band',band:'bosh',tayyor:'bosh'};s.holat=map[s.holat]||'bosh';db.ref('stollar/'+id).update({holat:s.holat});}
-function renderMenyu(){let el=document.getElementById('menyu-list');if(!el)return;let cats=[...new Set(menyu.map(m=>m.kat))];el.innerHTML=cats.map(cat=>`<div style="margin-bottom:16px"><div style="font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">${cat}</div>${menyu.filter(m=>m.kat===cat).map(m=>`<div class="menyu-item">${m.rasm?`<img src="${m.rasm}" class="menyu-img"/>`:`<div class="menyu-img-placeholder">🍽️</div>`}<div style="flex:1"><div class="row" style="gap:6px;margin-bottom:3px"><span style="font-weight:600;font-size:14px">${m.nom}</span><span class="tag">#${m.id}</span>${m.holat==='yoq'?'<span class="badge red">Mavjud emas</span>':''}</div>${m.tavsif?`<div style="font-size:12px;color:var(--muted)">${m.tavsif}</div>`:''}</div><div class="row" style="gap:8px"><span style="font-weight:700;color:var(--accent)">${m.narx.toLocaleString()}</span><button class="btn sm ${m.holat==='aktiv'?'danger':''}" onclick="toggleTaom(${m.id})">${m.holat==='aktiv'?'Yopish':'Ochish'}</button><button class="btn sm danger" onclick="taomOchir(${m.id})">✕</button></div></div>`).join('')}</div>`).join('');}
-function toggleTaom(id){let m=menyu.find(x=>x.id===id);if(m)db.ref('menyu/'+id).update({holat:m.holat==='aktiv'?'yoq':'aktiv'});}
-function taomOchir(id){if(!confirm('Taomni o\'chirasizmi?'))return;db.ref('menyu/'+id).remove();}
-function previewImg(input){let file=input.files[0];if(!file)return;if(file.size>3*1024*1024){alert('Rasm 3MB dan kichik bo\'lsin!');return;}let reader=new FileReader();reader.onload=e=>{let prev=document.getElementById('img-preview');prev.src=e.target.result;prev.style.display='block';document.getElementById('img-upload-area').style.display='none';};reader.readAsDataURL(file);}
-function taomQosh(){let nom=document.getElementById('f-nom').value.trim();let narx=parseInt(document.getElementById('f-narx').value)||0;let kat=document.getElementById('f-kat').value;let tavsif=document.getElementById('f-tavsif').value.trim();let holat=document.getElementById('f-holat').value;if(!nom||narx<1){document.getElementById('menyu-msg').textContent='Nom va narxni to\'ldiring!';document.getElementById('menyu-msg').style.color='var(--red)';return;}let prev=document.getElementById('img-preview');let rasm=prev.style.display==='block'?prev.src:'';let id=Date.now()%100000;db.ref('menyu/'+id).set({id,nom,narx,kat,tavsif,holat,rasm});document.getElementById('f-nom').value='';document.getElementById('f-narx').value='';document.getElementById('f-tavsif').value='';prev.style.display='none';prev.src='';document.getElementById('img-upload-area').style.display='flex';document.getElementById('menyu-msg').style.color='var(--green)';document.getElementById('menyu-msg').textContent=`"${nom}" qo'shildi!`;setTimeout(()=>document.getElementById('menyu-msg').textContent='',3000);}
-function renderOrders(){let el=document.getElementById('admin-orders');if(!el)return;if(!buyurtmalar.length){el.innerHTML='<div class="empty">Hozircha buyurtma yo\'q</div>';return;}el.innerHTML=buyurtmalar.slice().reverse().map(b=>`<div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;border-left:3px solid ${b.holat==='yangi'?'var(--red)':b.holat==='tayyorlanmoqda'?'var(--accent)':b.holat==='tayyor'?'var(--green)':'var(--muted)'}"><div class="row between" style="margin-bottom:6px"><div class="row" style="gap:8px"><span style="font-weight:700">${b.id}</span><span class="badge blue">Stol ${b.stol}</span><span class="badge ${b.holat==='yangi'?'red':b.holat==='tayyorlanmoqda'?'amber':b.holat==='tayyor'?'green':''}">${b.holat==='yangi'?'Yangi':b.holat==='tayyorlanmoqda'?'Tayyorlanmoqda':b.holat==='tayyor'?'Tayyor':'Yetkazildi'}</span></div><span style="font-size:12px;color:var(--muted)">${b.vaqt}</span></div><div style="font-size:12px;color:var(--muted)">${b.items.map(i=>`${i.nom} x${i.qty}`).join(' • ')}</div><div style="font-weight:700;color:var(--accent);margin-top:6px">${b.jami.toLocaleString()} so'm</div></div>`).join('');}
-function renderStat(){let s1=document.getElementById('s-jami'),s2=document.getElementById('s-daromad'),s3=document.getElementById('s-tayyor'),sl=document.getElementById('stat-list');if(s1)s1.textContent=buyurtmalar.length;if(s2)s2.textContent=buyurtmalar.reduce((a,x)=>a+x.jami,0).toLocaleString();if(s3)s3.textContent=buyurtmalar.filter(x=>x.holat==='yetkazildi'||x.holat==='tayyor').length;if(sl)sl.innerHTML=buyurtmalar.length?buyurtmalar.slice().reverse().map(x=>`<div class="row between" style="padding:8px 0;border-bottom:1px solid var(--border);font-size:13px"><div class="row" style="gap:8px"><span style="font-weight:600">${x.id}</span><span class="badge blue">Stol ${x.stol}</span><span style="color:var(--muted)">${x.items.map(i=>i.nom).join(', ')}</span></div><span style="color:var(--accent);font-weight:600">${x.jami.toLocaleString()} so'm</span></div>`).join(''):'<div class="empty">Ma\'lumot yo\'q</div>';}
+
+function showPage(name,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  if(el)el.classList.add('active');
+}
+
+function renderStollar(){
+  let g=document.getElementById('stol-grid');if(!g)return;
+  g.innerHTML=stollar.map(s=>{
+    let icon=s.holat==='bosh'?'○':s.holat==='aktiv'?'●':s.holat==='band'?'◉':'✓';
+    let holat=s.holat==='bosh'?'Bo\'sh':s.holat==='aktiv'?'Aktiv':s.holat==='band'?'Band':'Tayyor';
+    let color=s.holat==='bosh'?'var(--muted)':s.holat==='aktiv'?'var(--blue)':s.holat==='band'?'var(--red)':'var(--green)';
+    return`<div class="stol-btn ${s.holat}" onclick="stolClick(${s.id})">
+      <div style="font-size:22px;color:${color}">${icon}</div>
+      <div class="stol-num">${s.id}</div>
+      <div class="stol-holat" style="color:${color}">${holat}</div>
+    </div>`;
+  }).join('');
+}
+
+function stolClick(id){
+  let s=stollar.find(x=>x.id===id);if(!s)return;
+  let map={bosh:'aktiv',aktiv:'band',band:'bosh',tayyor:'bosh'};
+  s.holat=map[s.holat]||'bosh';
+  db.ref('restoranlar/'+rid+'/stollar/'+id).update({holat:s.holat});
+}
+
+function renderMenyu(){
+  let el=document.getElementById('menyu-list');if(!el)return;
+  let cats=[...new Set(menyu.map(m=>m.kat))];
+  el.innerHTML=cats.map(cat=>`
+    <div style="margin-bottom:16px">
+      <div style="font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">${cat}</div>
+      ${menyu.filter(m=>m.kat===cat).map(m=>`
+        <div class="menyu-item">
+          ${m.rasm?`<img src="${m.rasm}" class="menyu-img"/>`:`<div class="menyu-img-placeholder">🍽️</div>`}
+          <div style="flex:1">
+            <div class="row" style="gap:6px;margin-bottom:3px">
+              <span style="font-weight:600;font-size:14px">${m.nom}</span>
+              <span class="tag">#${m.id}</span>
+              ${m.holat==='yoq'?'<span class="badge red">Mavjud emas</span>':''}
+            </div>
+            ${m.tavsif?`<div style="font-size:12px;color:var(--muted)">${m.tavsif}</div>`:''}
+          </div>
+          <div class="row" style="gap:8px">
+            <span style="font-weight:700;color:var(--accent)">${m.narx.toLocaleString()}</span>
+            <button class="btn sm ${m.holat==='aktiv'?'danger':''}" onclick="toggleTaom(${m.id})">${m.holat==='aktiv'?'Yopish':'Ochish'}</button>
+            <button class="btn sm danger" onclick="taomOchir(${m.id})">✕</button>
+          </div>
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+function toggleTaom(id){
+  let m=menyu.find(x=>x.id===id);
+  if(m) db.ref('restoranlar/'+rid+'/menyu/'+id).update({holat:m.holat==='aktiv'?'yoq':'aktiv'});
+}
+function taomOchir(id){
+  if(!confirm('Taomni o\'chirasizmi?'))return;
+  db.ref('restoranlar/'+rid+'/menyu/'+id).remove();
+}
+function previewImg(input){
+  let file=input.files[0];if(!file)return;
+  if(file.size>3*1024*1024){alert('Rasm 3MB dan kichik bo\'lsin!');return;}
+  let reader=new FileReader();
+  reader.onload=e=>{
+    let prev=document.getElementById('img-preview');
+    prev.src=e.target.result;prev.style.display='block';
+    document.getElementById('img-upload-area').style.display='none';
+  };
+  reader.readAsDataURL(file);
+}
+function taomQosh(){
+  let nom=document.getElementById('f-nom').value.trim();
+  let narx=parseInt(document.getElementById('f-narx').value)||0;
+  let kat=document.getElementById('f-kat').value;
+  let tavsif=document.getElementById('f-tavsif').value.trim();
+  let holat=document.getElementById('f-holat').value;
+  if(!nom||narx<1){document.getElementById('menyu-msg').textContent='Nom va narxni to\'ldiring!';document.getElementById('menyu-msg').style.color='var(--red)';return;}
+  let prev=document.getElementById('img-preview');
+  let rasm=prev.style.display==='block'?prev.src:'';
+  let id=Date.now()%100000;
+  db.ref('restoranlar/'+rid+'/menyu/'+id).set({id,nom,narx,kat,tavsif,holat,rasm});
+  document.getElementById('f-nom').value='';document.getElementById('f-narx').value='';document.getElementById('f-tavsif').value='';
+  prev.style.display='none';prev.src='';document.getElementById('img-upload-area').style.display='flex';
+  document.getElementById('menyu-msg').style.color='var(--green)';
+  document.getElementById('menyu-msg').textContent=`"${nom}" qo'shildi!`;
+  setTimeout(()=>document.getElementById('menyu-msg').textContent='',3000);
+}
+function renderOrders(){
+  let el=document.getElementById('admin-orders');if(!el)return;
+  if(!buyurtmalar.length){el.innerHTML='<div class="empty">Hozircha buyurtma yo\'q</div>';return;}
+  el.innerHTML=buyurtmalar.slice().reverse().map(b=>`
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;border-left:3px solid ${b.holat==='yangi'?'var(--red)':b.holat==='tayyorlanmoqda'?'var(--accent)':b.holat==='tayyor'?'var(--green)':'var(--muted)'}">
+      <div class="row between" style="margin-bottom:6px">
+        <div class="row" style="gap:8px">
+          <span style="font-weight:700">${b.id}</span>
+          <span class="badge blue">Stol ${b.stol}</span>
+          <span class="badge ${b.holat==='yangi'?'red':b.holat==='tayyorlanmoqda'?'amber':b.holat==='tayyor'?'green':''}">${b.holat==='yangi'?'Yangi':b.holat==='tayyorlanmoqda'?'Tayyorlanmoqda':b.holat==='tayyor'?'Tayyor':'Yetkazildi'}</span>
+        </div>
+        <span style="font-size:12px;color:var(--muted)">${b.vaqt}</span>
+      </div>
+      <div style="font-size:12px;color:var(--muted)">${b.items.map(i=>`${i.nom} x${i.qty}`).join(' • ')}</div>
+      <div style="font-weight:700;color:var(--accent);margin-top:6px">${b.jami.toLocaleString()} so'm</div>
+    </div>`).join('');
+}
+function renderStat(){
+  let s1=document.getElementById('s-jami'),s2=document.getElementById('s-daromad'),s3=document.getElementById('s-tayyor'),sl=document.getElementById('stat-list');
+  if(s1)s1.textContent=buyurtmalar.length;
+  if(s2)s2.textContent=buyurtmalar.reduce((a,x)=>a+x.jami,0).toLocaleString();
+  if(s3)s3.textContent=buyurtmalar.filter(x=>x.holat==='yetkazildi'||x.holat==='tayyor').length;
+  if(sl)sl.innerHTML=buyurtmalar.length?buyurtmalar.slice().reverse().map(x=>`
+    <div class="row between" style="padding:8px 0;border-bottom:1px solid var(--border);font-size:13px">
+      <div class="row" style="gap:8px"><span style="font-weight:600">${x.id}</span><span class="badge blue">Stol ${x.stol}</span><span style="color:var(--muted)">${x.items.map(i=>i.nom).join(', ')}</span></div>
+      <span style="color:var(--accent);font-weight:600">${x.jami.toLocaleString()} so'm</span>
+    </div>`).join(''):'<div class="empty">Ma\'lumot yo\'q</div>';
+}
 function clock(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('uz',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
-initData();setInterval(clock,1000);clock();
+setInterval(clock,1000);clock();
 </script>
 </body>
 </html>
